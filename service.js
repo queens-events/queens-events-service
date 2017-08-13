@@ -1,23 +1,25 @@
 'use strict';
 
 const _ = require('lodash');
-const Sequelize = require('sequelize');
+const Sequelize = require('sequelize-cockroachdb');
 
 // Modules
+const db = require('./modules/db');
 const logger = require('./modules/logger');
 const webServer = require('./modules/webServer');
 
-/**
- * Aim 2 Micro-service entry point
- * Author: Dave Richer
+/** Queens Events Micro Service
+ * Queens Events Micro-service entry point
+ * Author: Stephen Peterkins
  */
-class AimService {
+class QueensEventsService {
     /**
      * Constructor
      */
     constructor(configurationObject) {
         // Set reasonable defaults
         const defaultConfig = {
+            directory: __dirname,
             debug: {
                 active: process.env.NODE_ENV === 'dev',
                 environment: process.env.NODE_ENV,
@@ -34,6 +36,7 @@ class AimService {
                 schemaName: process.env.DB_SCHEMA_NAME,
                 host: process.env.DB_HOST || '127.0.0.1',
                 dialect: process.env.DB_DIALECT || 'mysql',
+                port: process.env.DB_PORT || 3306,
                 pool: {
                     max: 5,
                     min: 0,
@@ -62,7 +65,7 @@ class AimService {
      * @returns {Promise.<void>}
      * @private
      */
-    async _init() {
+    async init() {
         try {
             await this._initLogger();
             await this._initDb();
@@ -81,7 +84,12 @@ class AimService {
      * @private
      */
     async _initLogger() {
-        this._logger = logger(this);
+        try {
+            this._logger = logger(this);
+        }
+        catch (err) {
+            this._logError('Something went wrong setting up the logger', err);
+        }
     }
 
     /**
@@ -104,18 +112,25 @@ class AimService {
     async _initDb() {
         try {
             // Create Database
-            this._db = new Sequelize(
-                this.config.database.schemaName,
-                this.config.database.credentials.userName,
-                this.config.database.credentials.password,
-                _.without(this.config.database, 'credentials')
-            );
-            return this._db.authenticate();
+            this._db = await db(this);
+            return this._db.sequelize.authenticate();
         }
         catch (err) {
-            // Not Implemented
+            this._logError('Something went wrong setting up the Database', err);
         }
     };
+
+    /**
+    * Log an error through the logging transport
+    * @param {string} message
+    * @param {Error} err
+    */
+    _logError(message, err) {
+        this._logger.error(message, {
+            message: err.message || '',
+            stack: err.stack || '',
+        });
+    }
 }
 
 module.exports = AimService; 

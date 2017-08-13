@@ -1,13 +1,14 @@
 'use strict';
 
 const Winston = require('winston');
+require('winston-daily-rotate-file');
 
 /**
  * Logger Logic
  * @param app
  */
 const initLogger = app => {
-    const logger = app => new (Winston.Logger)({
+    const logger = new (Winston.Logger)({
         exitOnError: false,
         transports: [
             new (Winston.transports.DailyRotateFile)({
@@ -48,7 +49,6 @@ const initLogger = app => {
             level: app.config.debug.level || 'info',
         });
     }
-
     return logger;
 }
 

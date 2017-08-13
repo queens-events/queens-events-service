@@ -6,10 +6,10 @@ if(currentEnv) require('dotenv').config();
 
 else require('dotenv').config();
 
-const AimService = require('./service');
+const QueensEventsService = require('./service');
 
 try {
-    const service = new AimService();
+    const service = new QueensEventsService();
 }
 catch(err) {
     console.dir(err);

@@ -6,9 +6,9 @@ const http = require('http');
  * Encapsulate the HTTP Logic
  * Includes Socket.IO and HTTP
  * @param app
- * @returns {{webServer: (*|Function), socketIO: *}}
+ * @returns {{webServer: (*|Function)}}
  */
-const initiWebserver = app => {
+const initWebserver = app => {
     // Create Express instance
     const webServer = Express();
 
@@ -18,7 +18,7 @@ const initiWebserver = app => {
     // Bind HTTP Server
     httpServer.listen(app.config.webServer.port || 1337);
 
-    return {webServer, socketIO};
+    return {webServer};
 };
 
-module.exports = initiWebserver;
+module.exports = initWebserver;
