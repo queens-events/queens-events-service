@@ -2,18 +2,18 @@
 
 ### Author: Stephen Peterkins
 
-# Installation
+## Installation
 
 ``yarn``
 ``yarn add <Backend Store>``
 ``cp .env.sample.env``
 Edit the .env file to suit your needs
 
-# Running
+## Running
 - *production* ``npm start``
 - *development* ``npm run dev``
 
-# Environment Variables
+## Environment Variables
 - *DB_HOST* database host
 - *DB_USER* database username
 - *DB_PASS* database password
@@ -22,7 +22,7 @@ Edit the .env file to suit your needs
 - *DEBUG_LEVEL* debug level for logging
 - *WEB_PORT* Port to listen on
 
-# Database
+## Database
 
 ## Migrations
 Queens Events Service is able to bootstrap itself via sequelize migrations

@@ -57,7 +57,7 @@ class QueensEventsService {
         this.config = _.defaultsDeep(defaultConfig, finalConfig);
 
         // Initialize
-        this._init();
+        this.init();
     };
 
     /**
@@ -133,4 +133,4 @@ class QueensEventsService {
     }
 }
 
-module.exports = AimService; 
+module.exports = QueensEventsService; 
