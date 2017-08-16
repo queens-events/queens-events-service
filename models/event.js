@@ -1,13 +1,13 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-    const Event = sequelize.define('Event', {
+    return sequelize.define('Event', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
-        title: {
+        name: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -23,13 +23,30 @@ module.exports = (sequelize, DataTypes) => {
         imageUrl: {
             type: DataTypes.STRING,
         },
-        category: {
-            type: DataTypes.ENUM,
-            values: ['CONCERTS', 'MOVIES', 'ARTS_AND_THEATER', 'EDUCATIONAL', 'HEALTH', 'SPORTS']
+        ownerID: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: 'user',
+                key: 'id',
+            },
         },
-        tags: {
-            type: DataTypes.ENUM,
-            values: ['19_PLUS','ALL_AGES'],
+        categoryID: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'category',
+                key: 'id',
+            },
+            // values: ['CONCERTS', 'MOVIES', 'ARTS_AND_THEATER', 'EDUCATIONAL', 'HEALTH', 'SPORTS']
+        },
+        tagID: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'tag',
+                key: 'id',
+            },
         },
         venueID: {
             type: DataTypes.INTEGER,
@@ -47,9 +64,6 @@ module.exports = (sequelize, DataTypes) => {
                 key: 'id',
             }
         },
-        // sub_events: {
-        //     params.sub_events || null,
-        // },
         cost: {
             type: DataTypes.INTEGER,
             allowNull: true,
@@ -75,20 +89,12 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
         },
         startTime: {
-            type: DataTypes.Date,
+            type: DataTypes.DATE,
             allowNull: false,
         },
         endtime: {
-            type: DataTypes.Date,
+            type: DataTypes.DATE,
             allowNull: false,
-        },
-        ownerID: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            references: {
-                model: 'user',
-                key: 'id',
-            },
         },
         createdAt: {
             type: DataTypes.DATE,
@@ -105,7 +111,9 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: false,
             allowNull: false,
         }
+    }, {
+        tableName: 'event',
+        freezeTableName: true,
+        timestamps: true,
     });
-
-    return Event;
 };

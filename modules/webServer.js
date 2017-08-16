@@ -1,4 +1,6 @@
 'use strict';
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const Express = require('express');
 const http = require('http');
 
@@ -12,13 +14,18 @@ const initWebserver = app => {
     // Create Express instance
     const webServer = Express();
 
+    if (app.config.debug.active === true) webServer.use(cors());
+    
+    webServer.use(bodyParser.json());
+    webServer.use(bodyParser.urlencoded({ extended: false }));
+
     // Bind Express instance to HTTP Server
     const httpServer = http.createServer(webServer);
 
     // Bind HTTP Server
     httpServer.listen(app.config.webServer.port || 1337);
 
-    return {webServer};
+    return webServer;
 };
 
 module.exports = initWebserver;

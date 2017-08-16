@@ -12,7 +12,9 @@
   "author": "Stephen Peterkins",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.17.2",
     "chai": "^4.1.1",
+    "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "express": "^4.15.4",
     "lodash": "^4.17.4",

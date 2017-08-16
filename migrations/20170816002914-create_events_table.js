@@ -7,7 +7,6 @@ module.exports = {
                 id: {
                     type: Sequelize.INTEGER,
                     primaryKey: true,
-                    unique: true,
                     autoIncrement: true,
                 },
                 email: {
@@ -25,9 +24,8 @@ module.exports = {
                     allowNull: false,
 
                 },
-                phone: {
-                    type: Sequelize.STRING,
-
+                phoneTypes: {
+                    type: Sequelize.ENUM('cell','landline'),
                 },
                 streetAddress: {
                     type: Sequelize.STRING,

@@ -1,5 +1,7 @@
+'use strict'
+
 module.exports = (sequelize, DataTypes) => {
-    const Venue = sequelize.define('Venue', {
+   return sequelize.define('Venue', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -13,28 +15,28 @@ module.exports = (sequelize, DataTypes) => {
                 key: 'id',
             },
         },
-        title: {
-            type: DataTypes.String,
+        name: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
         address: {
-            type: DataTypes.String,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         city: {
-            type: DataTypes.String,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         province: {
-            type: DataTypes.String(2),
+            type: DataTypes.STRING(2),
             allowNull: false,
         },
         country: {
-            types: DataTypes.String(2),
+            type: DataTypes.STRING(2),
             allowNull: false,
         },
         postal: {
-            type: DataTypes.String(7),
+            type: DataTypes.STRING(7),
             allowNull: false
         },
         lat: {
@@ -51,15 +53,17 @@ module.exports = (sequelize, DataTypes) => {
         },
         createdAt: {
             type: DataTypes.DATE,
-            defaultValue: sequelize.NOW,
+            defaultValue: DataTypes.NOW,
             allowNull: false,
         },
         updatedAt: {
             type: DataTypes.DATE,
-            defaultValue: sequelize.NOW,
+            defaultValue: DataTypes.NOW,
             allowNull: false,
         }
+     }, {
+        tableName: 'venue',
+        freezeTableName: true,
+        timestamps: true,
     });
-
-    return Venue
 }

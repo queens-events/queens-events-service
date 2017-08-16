@@ -1,5 +1,7 @@
+'use strict'
+
 module.exports = (sequelize, DataTypes) => {
-    const Organization = sequelize.define('Organization', {
+    return sequelize.define('Organization', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -9,41 +11,43 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: true,
             references: {
-                model: 'venue',
+                model: 'user',
                 key: 'id',
             },
         },
-        title: {
-            type: DataTypes.String,
+        name: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
         description: {
-            type: DataTypes.String,
+            type: DataTypes.STRING,
             allowNull: true,
         },
         websiteUrl: {
-            type: DataTypes.String,
+            type: DataTypes.STRING,
             allowNull: true,
         },
         fbPageUrl: {
-            type: DataTypes.String,
+            type: DataTypes.STRING,
             allowNull: true,
         },
         phone: {
-            type: DataTypes.String,
+            type: DataTypes.STRING,
             allowNull: true,
         },
         created_at: {
             type: DataTypes.DATE,
-            defaultValue: sequelize.NOW,
+            defaultValue: DataTypes.NOW,
             allowNull: false,
         },
         updated_at: {
             type: DataTypes.DATE,
-            defaultValue: sequelize.NOW,
+            defaultValue: DataTypes.NOW,
             allowNull: false,
         },
+    }, {
+        tableName: 'organization',
+        freezeTableName: true,
+        timestamps: true,
     });
-
-    return Organization
 }
