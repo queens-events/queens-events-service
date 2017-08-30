@@ -14,7 +14,7 @@ module.exports = (app) => {
     
     const getVenues = async (req, res) => {
         try {
-            const venue = Venue.findAll();
+            const venue = await Venue.findAll();
 
             res.json({
                 success: true,
@@ -33,7 +33,7 @@ module.exports = (app) => {
 
     const getVenueByID = async () => {
         try {
-            const venue = Venue.findOne({ where: { id: req.params.venueID }});
+            const venue = await Venue.findOne({ where: { id: req.params.venueID }});
 
             // venue does not exist
             if (!venue) {
