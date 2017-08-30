@@ -1,5 +1,3 @@
-'use strict';
-
 const currentEnv = process.env.NODE_ENV;
 
 if(currentEnv) require('dotenv').config();

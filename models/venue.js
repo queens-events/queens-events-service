@@ -1,19 +1,9 @@
-'use strict'
-
 module.exports = (sequelize, DataTypes) => {
    return sequelize.define('Venue', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
-        },
-        orgOwnerID: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            references: {
-                model: 'organization',
-                key: 'id',
-            },
         },
         name: {
             type: DataTypes.STRING,

@@ -1,9 +1,7 @@
-'use strict';
-
 const fs = require('fs');
 const _ = require('lodash');
 const path = require('path');
-const Sequelize = require('sequelize-cockroachdb');
+const Sequelize = require('sequelize');
 
 /**
  * Setup Database associations
@@ -28,16 +26,7 @@ const setupRelations = (db) => {
     /**
      * Venues
      */
-    // An Organization can have many Venues
-    db.Organization.hasMany(db.Venue, {
-        foreignKey: 'orgOwnerID',
-        as: 'Venues'
-    });
-
-    // A Venue belongs to an Organization
-    db.Venue.belongsTo(db.Organization, {
-        foreignKey: 'orgOwnerID'
-    });
+    
 
     /**
      * Organization
@@ -53,6 +42,18 @@ const setupRelations = (db) => {
         foreignKey: 'ownerID'
     });
 
+    // An organization belongs to many UserRoles through OrganizatonUsers
+    db.Organization.belongsToMany(db.UserRole, {
+        as: 'UserRoles',
+        through: db.OrganizationUser
+    });
+
+    // A UserRole belongs to many organization through OrganizationUsers
+    db.UserRole.belongsToMany(db.Organization, {
+        as: 'Organizations',
+        through: db.OrganizationUser
+    });
+
     /**
      * Events
      */
@@ -65,28 +66,6 @@ const setupRelations = (db) => {
     // An Event belongs to a single Owner (User)
     db.Event.belongsTo(db.User, {
         foreignKey: 'ownerID'
-    });
-
-    // A Tag belongs to a single Event
-    db.Tag.haveMany(db.Event, {
-        foreignKey: 'tagID',
-        as: 'Tags'
-    });
-    
-     // An Event has one Tag
-    db.Event.belongsTo(db.Tag, {
-        foreignKey: 'tagID',
-    });
-
-    // A Category has many Events
-    db.Category.hasMany(db.Event, {
-        foreignKey: 'categoryID',
-        as: 'Categories'
-    });
-
-    // An Event belongs to one Category
-    db.Event.belongsTo(db.Category, {
-        foreignKey: 'categoryID',
     });
 
     // An Organization has many Events
@@ -164,24 +143,26 @@ const initDb = async (app) => {
     // Dynamically Read in Model
     loadModels(db, dirPath);
 
-    await db.Role.sync()
-        // .then(() => {
-        //     return Role.bulkCreate([
-        //         {
-        //             id: 1,
-        //             name: 'superuser',
-        //             createdAt: now,
-        //             updatedAt: now,
-        //         },
-        //         {
-        //             id: 2,
-        //             name: 'user',
-        //             createdAt: now,
-        //             updatedAt: now,
-        //         },
-        //     ]);
-        // });
-    await db.Ability.sync()
+    setupRelations(db);
+
+    // await db.Role.sync()
+    // .then(() => {
+    //     return Role.bulkCreate([
+    //         {
+    //             id: 1,
+    //             name: 'superuser',
+    //             createdAt: now,
+    //             updatedAt: now,
+    //         },
+    //         {
+    //             id: 2,
+    //             name: 'user',
+    //             createdAt: now,
+    //             updatedAt: now,
+    //         },
+    //     ]);
+    // });
+    // await db.Ability.sync()
     // .then(() => {
     //     return Ability.bulkCreate([
     //         // Users
@@ -281,13 +262,6 @@ const initDb = async (app) => {
     //         },
     //     ]);
     // });
-    await db.RoleAbility.sync();
-    await db.Tag.sync();
-    await db.Category.sync();
-    await db.User.sync();
-    await db.Organization.sync();
-    await db.Venue.sync();
-    await db.Event.sync();
 
     return db;
 };

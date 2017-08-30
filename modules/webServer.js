@@ -1,4 +1,3 @@
-'use strict';
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const Express = require('express');
@@ -25,7 +24,7 @@ const initWebserver = app => {
     // Bind HTTP Server
     httpServer.listen(app.config.webServer.port || 1337);
 
-    return webServer;
+    return { webServer };
 };
 
 module.exports = initWebserver;

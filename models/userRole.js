@@ -1,20 +1,25 @@
-'use strict';
-
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('Tag', {
+    return sequelize.define('UserRole', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
-        name: {
-            type: DataTypes.STRING,
+        userId: {
+            type: DataTypes.INTEGER,
             allowNull: false,
-            unique: true,
+            references: {
+                model: 'user',
+                key: 'id',
+            },
         },
-        description: {
-            type: DataTypes.STRING,
-            allowNull: true,
+        roleId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'role',
+                key: 'id',
+            },
         },
         createdAt: {
             type: DataTypes.DATE,
@@ -27,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: DataTypes.NOW
         }
     }, {
-        tableName: 'tag',
+        tableName: 'userRole',
         freezeTableName: true,
         timestamps: true,
     });

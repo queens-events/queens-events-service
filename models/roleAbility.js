@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('RoleAbility', {
         id: {
@@ -10,10 +8,18 @@ module.exports = (sequelize, DataTypes) => {
         roleId: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: 'role',
+                key: 'id',
+            },
         },
         abilityId: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: 'ability',
+                key: 'id',
+            },
         },
         createdAt: {
             type: DataTypes.DATE,

@@ -1,7 +1,4 @@
-'use strict';
-
 const _ = require('lodash');
-const Sequelize = require('sequelize-cockroachdb');
 
 // Modules
 const db = require('./modules/db');
@@ -21,9 +18,9 @@ class QueensEventsService {
         const defaultConfig = require('./config.js');
 
         // Placeholders
-        this._db = null;
-        this._webServer = null;
-        this._logger = null;
+        this.db = null;
+        this.webServer = null;
+        this.logger = null;
 
         // Override the defaults with what ever user defined variables passed into the constructor
         const finalConfig = _.isObject(configurationObject) ? configurationObject : Object.create({});
@@ -58,7 +55,7 @@ class QueensEventsService {
      */
     async _initLogger() {
         try {
-            this._logger = logger(this);
+            this.logger = logger(this);
         }
         catch (err) {
             this._logError('Something went wrong setting up the logger', err);
@@ -72,13 +69,13 @@ class QueensEventsService {
      */
     async _initWebServer() {
         const httpServices = webServer(this);
-        this._webServer = httpServices.webServer;
+        this.webServer = httpServices.webServer;
 
         // Load Routes
         require('./routes')(this);
 
-        this._logger.info(`Listening for both HTTP on port ${this.config.webServer.port}`);
-        this._logger.info(`Control-C to terminate`);
+        this.logger.info(`Listening for both HTTP on port ${this.config.webServer.port}`);
+        this.logger.info(`Control-C to terminate`);
     };
 
     /**
@@ -89,8 +86,8 @@ class QueensEventsService {
     async _initDb() {
         try {
             // Create Database
-            this._db = await db(this);
-            return this._db.sequelize.authenticate();
+            this.db = await db(this);
+            return this.db.sequelize.authenticate();
         }
         catch (err) {
             this._logError('Something went wrong setting up the Database', err);
@@ -103,7 +100,7 @@ class QueensEventsService {
     * @param {Error} err
     */
     _logError(message, err) {
-        this._logger.error(message, {
+        this.logger.error(message, {
             message: err.message || '',
             stack: err.stack || '',
         });

@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('Event', {
         id: {
@@ -31,22 +29,13 @@ module.exports = (sequelize, DataTypes) => {
                 key: 'id',
             },
         },
-        categoryID: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'category',
-                key: 'id',
-            },
-            // values: ['CONCERTS', 'MOVIES', 'ARTS_AND_THEATER', 'EDUCATIONAL', 'HEALTH', 'SPORTS']
+        category: {
+            type: DataTypes.ENUM,
+            values: ['CONCERTS', 'MOVIES', 'ARTS_AND_THEATER', 'EDUCATIONAL', 'HEALTH', 'SPORTS'],
         },
-        tagID: {
+        tag: {
             type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'tag',
-                key: 'id',
-            },
+            values: ['ALL_AGES', '19+_SOCIAL'],
         },
         venueID: {
             type: DataTypes.INTEGER,
