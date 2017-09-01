@@ -7,7 +7,9 @@
     "dev": "NODE_ENV=dev node index.js",
     "test": "node node_modules/mocha/bin/mocha",
     "migrate": "sequelize --config migrationConfig.json db:migrate",
-    "reset-migrate": "sequelize --config migrationConfig.json db:migrate:undo:all"
+    "reset-migrate": "sequelize --config migrationConfig.json db:migrate:undo:all",
+    "seed-venues": "sequelize --config migrationConfig.json db:seed --seed 20170901174119-seed_venue_data.js",
+    "seed-events": "sequelize --config migrationConfig.json db:seed --seed 20170901174144-seed_event_data.js"
   },
   "repository": "https://github.com/QueensEvents/quevents-service",
   "author": "Stephen Peterkins",
@@ -20,6 +22,7 @@
     "express": "^4.15.4",
     "express-promise-router": "^2.0.0",
     "lodash": "^4.17.4",
+    "moment": "^2.18.1",
     "mysql2": "^1.4.2",
     "sequelize": "^4.4.3",
     "winston": "^2.3.1",

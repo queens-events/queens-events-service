@@ -1,3 +1,5 @@
+const now = require('../lib/now.js');
+
 const tableName = 'ability';
 
 module.exports = {
@@ -21,12 +23,12 @@ module.exports = {
 				createdAt: {
 					type: Sequelize.DATE,
 					allowNull: false,
-					defaultValue: Sequelize.NOW
+					defaultValue: now()
 				},
 				updatedAt: {
 					type: Sequelize.DATE,
 					allowNull: false,
-					defaultValue: Sequelize.NOW
+					defaultValue: now()
 				}
 			})
 	},

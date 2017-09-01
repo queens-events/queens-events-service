@@ -31,11 +31,15 @@ module.exports = (sequelize, DataTypes) => {
         },
         category: {
             type: DataTypes.ENUM,
-            values: ['CONCERTS', 'MOVIES', 'ARTS_AND_THEATER', 'EDUCATIONAL', 'HEALTH', 'SPORTS'],
+            values: ['CONCERTS', 'MOVIES', 'ARTS_AND_THEATER', 'EDUCATIONAL', 'HEALTH', 'SPORTS', 'SOCIALS'],
         },
         tag: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.ENUM,
             values: ['ALL_AGES', '19+_SOCIAL'],
+        },
+        venueString: {
+            type: DataTypes.STRING,
+            allowNull: true,
         },
         venueID: {
             type: DataTypes.INTEGER,
@@ -54,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         cost: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.DOUBLE,
             allowNull: true,
         },
         capacity: {
@@ -74,7 +78,15 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
         },
         recurring: {
-            type: DataTypes.BOOLEAN,
+            type: DataTypes.ENUM,
+            values: ['DAILY', 'EVERY_OTHER_DAY', 'WEEKLY', 'BIWEEKLY', 'MONTHLY', 'ANNUAL'],
+        },
+        recurringStartDate: {
+            type: DataTypes.DATE,
+            allowNull: true,
+        },
+        recurringEndDate: {
+            type: DataTypes.DATE,
             allowNull: true,
         },
         startTime: {

@@ -1,3 +1,5 @@
+const now = require('../lib/now.js');
+
 const tableName = 'event';
 
 module.exports = {
@@ -14,6 +16,9 @@ module.exports = {
 					allowNull: false,
 				},
 				description: {
+					type: Sequelize.STRING,
+				},
+				qeUrl: {
 					type: Sequelize.STRING,
 				},
 				itemUrl: {
@@ -35,11 +40,15 @@ module.exports = {
 				},
 				category: {
 					type: Sequelize.ENUM,
-					values: ['CONCERTS', 'MOVIES', 'ARTS_AND_THEATER', 'EDUCATIONAL', 'HEALTH', 'SPORTS'],
+					values: ['CONCERTS', 'MOVIES', 'ARTS_AND_THEATER', 'EDUCATIONAL', 'HEALTH', 'SPORTS', 'SOCIALS'],
 				},
 				tag: {
-					type: Sequelize.INTEGER,
+					type: Sequelize.ENUM,
 					values: ['ALL_AGES', '19+_SOCIAL'],
+				},
+				venueString: {
+					type: Sequelize.STRING,
+					allowNull: true,
 				},
 				venueID: {
 					type: Sequelize.INTEGER,
@@ -58,7 +67,7 @@ module.exports = {
 					}
 				},
 				cost: {
-					type: Sequelize.INTEGER,
+					type: Sequelize.DOUBLE,
 					allowNull: true,
 				},
 				capacity: {
@@ -78,7 +87,23 @@ module.exports = {
 					allowNull: true,
 				},
 				recurring: {
-					type: Sequelize.BOOLEAN,
+					type: Sequelize.ENUM,
+					values: [
+						'DAILY',
+						'EVERY_OTHER_DAY',
+						'WEEKLY',
+						'BIWEEKLY',
+						'FIRST_OF_THE_MONTH',
+						'MONTHLY',
+						'ANNUAL'
+					],
+				},
+				recurringStartDate: {
+					type: Sequelize.DATE,
+					allowNull: true,
+				},
+				recurringEndDate: {
+					type: Sequelize.DATE,
 					allowNull: true,
 				},
 				startTime: {
@@ -91,13 +116,13 @@ module.exports = {
 				},
 				createdAt: {
 					type: Sequelize.DATE,
-					defaultValue: Sequelize.NOW,
 					allowNull: false,
+					defaultValue: now()
 				},
 				updatedAt: {
 					type: Sequelize.DATE,
-					defaultValue: Sequelize.NOW,
 					allowNull: false,
+					defaultValue: now()
 				},
 				isActive: {
 					type: Sequelize.BOOLEAN,

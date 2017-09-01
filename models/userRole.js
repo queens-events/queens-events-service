@@ -1,3 +1,5 @@
+const now = require('../lib/now.js');
+
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('UserRole', {
         id: {
@@ -24,12 +26,12 @@ module.exports = (sequelize, DataTypes) => {
         createdAt: {
             type: DataTypes.DATE,
             allowNull: false,
-            defaultValue: DataTypes.NOW
+            defaultValue: now()
         },
         updatedAt: {
             type: DataTypes.DATE,
             allowNull: false,
-            defaultValue: DataTypes.NOW
+            defaultValue: now()
         }
     }, {
         tableName: 'userRole',

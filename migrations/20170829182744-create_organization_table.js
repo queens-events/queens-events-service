@@ -1,3 +1,5 @@
+const now = require('../lib/now.js');
+
 const tableName = 'organization';
 
 module.exports = {
@@ -33,18 +35,22 @@ module.exports = {
 					type: Sequelize.STRING,
 					allowNull: true,
 				},
+				email: {
+					type: Sequelize.STRING,
+					allowNull: true,
+				},
 				phone: {
 					type: Sequelize.STRING,
 					allowNull: true,
 				},
 				createdAt: {
 					type: Sequelize.DATE,
-					defaultValue: Sequelize.NOW,
+					defaultValue: now(),
 					allowNull: false,
 				},
-				updatedAt: {
+				updated_at: {
 					type: Sequelize.DATE,
-					defaultValue: Sequelize.NOW,
+					defaultValue: now(),
 					allowNull: false,
 				},
 			})

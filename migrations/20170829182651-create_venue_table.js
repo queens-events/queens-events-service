@@ -1,3 +1,5 @@
+const now = require('../lib/now.js');
+
 const tableName = 'venue';
 
 module.exports = {
@@ -31,7 +33,7 @@ module.exports = {
 				},
 				postal: {
 					type: Sequelize.STRING(7),
-					allowNull: false
+					allowNull: true, //TODO Reset when you get the data
 				},
 				lat: {
 					type: Sequelize.FLOAT,
@@ -47,12 +49,12 @@ module.exports = {
 				},
 				createdAt: {
 					type: Sequelize.DATE,
-					defaultValue: Sequelize.NOW,
+					defaultValue: now(),
 					allowNull: false,
 				},
 				updatedAt: {
 					type: Sequelize.DATE,
-					defaultValue: Sequelize.NOW,
+					defaultValue: now(),
 					allowNull: false,
 				}
 			})

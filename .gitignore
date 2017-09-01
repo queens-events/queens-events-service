@@ -1,4 +1,5 @@
 node_modules
+data
 migrationConfig.json
 *.log
 .env

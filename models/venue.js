@@ -1,3 +1,5 @@
+const now = require('../lib/now.js');
+
 module.exports = (sequelize, DataTypes) => {
    return sequelize.define('Venue', {
         id: {
@@ -27,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         postal: {
             type: DataTypes.STRING(7),
-            allowNull: false
+            allowNull: true, //TODO reset when data is available
         },
         lat: {
             type: DataTypes.FLOAT,
@@ -43,12 +45,12 @@ module.exports = (sequelize, DataTypes) => {
         },
         createdAt: {
             type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW,
+            defaultValue: now(),
             allowNull: false,
         },
         updatedAt: {
             type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW,
+            defaultValue: now(),
             allowNull: false,
         }
      }, {
