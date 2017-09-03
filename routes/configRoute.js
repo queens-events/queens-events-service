@@ -53,7 +53,7 @@ module.exports = (app) => {
                     greeting = "Hi " + name + ". ";
                 }
                  
-                let  message = greeting + "My name is QEbot Bot. I can tell you various details regarding events. What events would you like to know about?";
+                let  message = greeting + "My name is STOMO. I can tell you various details regarding events managed by Queens Events! What events would you like to know about?";
                 
                 sendService.sendTextMessage(senderId, message);
                 sendService.sendEventQuickReplies(senderId);
@@ -89,7 +89,7 @@ module.exports = (app) => {
                 messageText === 'adult_socials' || messageText === 'all_ages_socials' || messageText === 'arts_and_theater'||
                 messageText === 'education' || messageText === 'health' || messageText === 'sports'){
     
-                const events = Events.findAll({ where: { category: messageText.toUpperCase() }, limit: 5 });
+                const events = await Event.findAll({ where: { category: messageText.toUpperCase() }, limit: 5 });
     
                 console.log(sessions[sessionId]);
                 //sessions[sessionId].fbid
