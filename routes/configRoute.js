@@ -54,8 +54,8 @@ module.exports = (app) => {
                  
                 let  message = greeting + "My name is QEbot Bot. I can tell you various details regarding events. What events would you like to know about?";
                 
-                sendHelper.sendTextMessage(senderId, message);
-                sendHelper.sendEventQuickReplies(senderId);
+                sendService.sendTextMessage(senderId, message);
+                sendService.sendEventQuickReplies(senderId);
             });
         }
     };
@@ -81,7 +81,7 @@ module.exports = (app) => {
             // and send back the template example. Otherwise, just echo the text we received.
             if(messageText === 'Popular' || messageText === 'Close' || messageText === 'Soon') {
                 filterChoice = messageText;
-                sendHelper.sendLocationPrompt(sessions[sessionId].fbid);
+                sendService.sendLocationPrompt(sessions[sessionId].fbid);
                 // We retrieve the user's current session, or create one if it doesn't exist
                 // This is needed for our bot to figure out the conversation history
             } else if (messageText === 'concerts' || messageText === 'movies' ||
@@ -92,7 +92,7 @@ module.exports = (app) => {
     
                 console.log(sessions[sessionId]);
                 //sessions[sessionId].fbid
-                sendHelper.sendEventGenericMessage(sessions[sessionId].fbid, events);
+                sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
             } 
             else if (messageAttachments) {
                 if (messageAttachments[0].type === "location"){
@@ -115,7 +115,7 @@ module.exports = (app) => {
                     getLocalEvents(senderID, lat, long, sortBy, null); //senderID
                 } 
                 else {
-                    sendHelper.sendTextMessage(senderID, "Message with attachment received");
+                    sendService.sendTextMessage(senderID, "Message with attachment received");
                 }
             }
         }
@@ -128,16 +128,14 @@ module.exports = (app) => {
     // Facebook Webhook
       
     const getWebhook = (req, res) => {
+        console.log('This is getting called!');
         if (req.query["hub.verify_token"] === process.env.VERIFICATION_TOKEN) {
             app.logger.info("Verified webhook");
             
             res.status(200).send(req.query["hub.challenge"]);
         } else {
-            app.logger.error('Something went wrong inside the updateeventByID', {
-                message: err.message || '',
-                stack: err.stack || '',
-            });
-            
+            app.logger.error("Verification failed. The tokens do not match.");
+
             res.sendStatus(403);
         }
     };
@@ -174,7 +172,7 @@ module.exports = (app) => {
         namespace,
         router: Router()
             .get('/', root)
-            .get('/webook', getWebhook)
-            .post('/webook', postWebhook)
+            .get('/webhook', getWebhook)
+            .post('/webhook', postWebhook),
     }
 }
