@@ -7,7 +7,7 @@ const namespace = '/';
 const sendService = require('../services/senderService');
 
 module.exports = (app) => {
-    const { Events } = app.db;
+    const { Event } = app.db;
     
     const sessions = {};
 
@@ -90,7 +90,9 @@ module.exports = (app) => {
                 messageText === 'education' || messageText === 'health' || messageText === 'sports'){
     
                 const events = await Event.findAll({ where: { category: messageText.toUpperCase() }, limit: 5 });
-    
+                
+                app.logger.info(events);
+                
                 console.log(sessions[sessionId]);
                 //sessions[sessionId].fbid
                 sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
