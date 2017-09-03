@@ -95,6 +95,8 @@ module.exports = (app) => {
                 console.log(sessions[sessionId]);
                 //sessions[sessionId].fbid
                 await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
+
+                sendService.sendEventQuickReplies(senderID);
             } 
             else if (messageAttachments) {
                 if (messageAttachments[0].type === "location"){
@@ -121,7 +123,6 @@ module.exports = (app) => {
                 }
             }
         }
-        sendService.sendEventQuickReplies(senderID);
     };
 
     const root = async (req, res) => {
