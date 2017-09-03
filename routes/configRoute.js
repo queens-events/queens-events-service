@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const request = require('request');
 const Router = require('express-promise-router');
 
 const namespace = '/';
