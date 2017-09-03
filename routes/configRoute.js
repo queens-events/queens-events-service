@@ -123,6 +123,8 @@ module.exports = (app) => {
                 }
             }
         }
+
+        sendService.sendEventQuickReplies(senderId);
     };
 
     const root = async (req, res) => {

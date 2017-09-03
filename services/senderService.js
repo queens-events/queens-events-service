@@ -198,6 +198,7 @@ const sendService = {
 			//let dateTime = new Date(Date.parse(event.startTime));
 			//let location = eventObjectList[e].location.city;
 			const buttons = [];
+			const dateString = `${moment(event.startTime, "YYYY-MM-DD HH:mm:ss").format('LLLL')} - ${moment(event.endTime, "YYYY-MM-DD HH:mm:ss").format('LT')}`;
 
 			buttons.push({
 				type: 'web_url',
@@ -216,7 +217,7 @@ const sendService = {
 			messageData.message.attachment.payload.elements.push(
 			{
 				title: event.name,
-				subtitle: `${moment(event.startTime).format('LLLL')} - ${moment(event.endTime).format('LT')}`, 
+				subtitle: dateString, 
 				item_url: event.qeUrl || event.fbEventUrl || event.itemUrl,
 				image_url: event.imageUrl,
 				buttons
