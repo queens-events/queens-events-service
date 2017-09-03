@@ -94,7 +94,7 @@ module.exports = (app) => {
                 
                 console.log(sessions[sessionId]);
                 //sessions[sessionId].fbid
-                sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
+                await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
             } 
             else if (messageAttachments) {
                 if (messageAttachments[0].type === "location"){
