@@ -91,12 +91,12 @@ module.exports = (app) => {
                 payload === 'education' || payload === 'health' || payload === 'sports') {
     
                 const events = await Event.findAll({ where: { category: payload.toUpperCase() }, limit: 5 });
-                
-                console.log(sessions[sessionId]);
-                //sessions[sessionId].fbid
-                await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
 
-                sendService.sendEventQuickReplies(senderID);
+                const result = await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
+
+                console.log("This is a result for generic messages", result);
+
+                await sendService.sendEventQuickReplies(senderID);
             } 
             else if (messageAttachments) {
                 if (messageAttachments[0].type === "location"){
