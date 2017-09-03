@@ -92,8 +92,6 @@ module.exports = (app) => {
     
                 const events = await Event.findAll({ where: { category: payload.toUpperCase() }, limit: 5 });
                 
-                app.logger.info(events);
-                
                 console.log(sessions[sessionId]);
                 //sessions[sessionId].fbid
                 sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
@@ -123,8 +121,7 @@ module.exports = (app) => {
                 }
             }
         }
-
-        sendService.sendEventQuickReplies(senderId);
+        sendService.sendEventQuickReplies(senderID);
     };
 
     const root = async (req, res) => {

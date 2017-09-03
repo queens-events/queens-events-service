@@ -217,7 +217,7 @@ const sendService = {
 			messageData.message.attachment.payload.elements.push(
 			{
 				title: event.name,
-				subtitle: dateString, 
+				subtitle: dateString,
 				item_url: event.qeUrl || event.fbEventUrl || event.itemUrl,
 				image_url: event.imageUrl,
 				buttons
