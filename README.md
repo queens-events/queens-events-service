@@ -27,8 +27,8 @@ Edit the .env file to suit your needs
 ## Migrations
 Queens Events Service is able to bootstrap itself via sequelize migrations
 
-- Install the sequelize-cli ``npm install -g sequelize``
-- Run the migrations ``sequelize db:migrate``
+- Install the sequelize-cli ``yarn global add sequelize-cli``
+- Run the migrations ``npm run migrate``
 
 Docs here for [modifying/creating migrations](http://docs.sequelizejs.com/manual/tutorial/migrations.html)
 

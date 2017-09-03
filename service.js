@@ -2,6 +2,7 @@ const _ = require('lodash');
 
 // Modules
 const db = require('./modules/db');
+const bot = require('./modules/bot');
 const logger = require('./modules/logger');
 const webServer = require('./modules/webServer');
 
@@ -19,6 +20,7 @@ class QueensEventsService {
 
         // Placeholders
         this.db = null;
+        this.bot = null;
         this.webServer = null;
         this.logger = null;
 
@@ -40,6 +42,7 @@ class QueensEventsService {
             await this._initLogger();
             await this._initDb();
             await this._initWebServer();
+            await this._initBot();
         }
         catch(err) {
             console.dir(err)
@@ -93,6 +96,19 @@ class QueensEventsService {
             this._logError('Something went wrong setting up the Database', err);
         }
     };
+
+    /**
+     * @return {Promise.<void>}
+     * @private
+     */
+
+     async _initBot() {
+        try {
+            this.bot = bot(this);
+        } catch (err) {
+            this._logError('Something went wron setting up the bot', err);
+        }
+     }
 
     /**
     * Log an error through the logging transport
