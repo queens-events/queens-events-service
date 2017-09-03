@@ -28,7 +28,7 @@ module.exports = (app) => {
         return sessionId;
     };
 
-    const processPostback = (event) => {
+    const processPostback = async (event) => {
         var senderId = event.sender.id;
         var payload = event.postback.payload;
       
@@ -55,8 +55,8 @@ module.exports = (app) => {
                  
                 let  message = greeting + "My name is STOMO. I can tell you various details regarding events managed by Queens Events! What events would you like to know about?";
                 
-                sendService.sendTextMessage(senderId, message);
-                sendService.sendEventQuickReplies(senderId);
+                await sendService.sendTextMessage(senderId, message);
+                await sendService.sendEventQuickReplies(senderId);
             });
         }
     };
@@ -78,6 +78,7 @@ module.exports = (app) => {
         const sessionId = findOrCreateSession(senderID);
     
         if (messageText) {
+            const payload = message.quick_reply.payload;
             // If we receive a text message, check to see if it matches a keyword
             // and send back the template example. Otherwise, just echo the text we received.
             if(messageText === 'Popular' || messageText === 'Close' || messageText === 'Soon') {
@@ -85,11 +86,11 @@ module.exports = (app) => {
                 sendService.sendLocationPrompt(sessions[sessionId].fbid);
                 // We retrieve the user's current session, or create one if it doesn't exist
                 // This is needed for our bot to figure out the conversation history
-            } else if (messageText === 'concerts' || messageText === 'movies' ||
-                messageText === 'adult_socials' || messageText === 'all_ages_socials' || messageText === 'arts_and_theater'||
-                messageText === 'education' || messageText === 'health' || messageText === 'sports') {
+            } else if (payload === 'concerts' || payload === 'movies' ||
+                payload === 'adult_socials' || payload === 'all_ages_socials' || payload === 'arts_and_theater'||
+                payload === 'education' || payload === 'health' || payload === 'sports') {
     
-                const events = await Event.findAll({ where: { category: messageText.toUpperCase() }, limit: 5 });
+                const events = await Event.findAll({ where: { category: payload.toUpperCase() }, limit: 5 });
                 
                 app.logger.info(events);
                 
@@ -162,7 +163,7 @@ module.exports = (app) => {
                 } else if(event.message) {
                     receivedMessage(event);
                 } else {
-                    console.log("Webhook received unknow event: ", event);
+                    console.log("Webhook received unknown event: ", event);
                 }
             });
         });

@@ -211,11 +211,12 @@ const sendService = {
 
 			buttons.push({type: "element_share"})
 
+			//timeService.sqlTimestampToDate(event.startTime) || event.startTime, //+ "\n" + location,
+
 			messageData.message.attachment.payload.elements.push(
 			{
 				title: event.name,
 				subtitle: `${moment(event.startTime).format('LLLL')} - ${moment(event.endTime).format('LT')}`, 
-				//timeService.sqlTimestampToDate(event.startTime) || event.startTime, //+ "\n" + location,
 				item_url: event.qeUrl || event.fbEventUrl || event.itemUrl,
 				image_url: event.imageUrl,
 				buttons
