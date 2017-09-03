@@ -12,6 +12,9 @@ module.exports = (sequelize, DataTypes) => {
         description: {
             type: DataTypes.STRING,
         },
+        qeUrl:{
+            type: DataTypes.STRING,
+        },
         itemUrl: {
             type: DataTypes.STRING,
         },

@@ -1,4 +1,5 @@
 const request = require('request');
+const moment = require('moment');
 const timeService = require('./timeService');
 
 const sendService = {
@@ -50,8 +51,8 @@ const sendService = {
         "quick_replies":[
           {
             "content_type":"text",
-            "title":"Popular",
-            "payload":"Popular",
+            "title":"Soon",
+            "payload":"Soon",
             "image_url": "https://s3.ca-central-1.amazonaws.com/queens-events/icons/events_icon.png"
           },
           {
@@ -178,98 +179,101 @@ const sendService = {
     this.callSendAPI(messageData);
   },
 
-  sendEventGenericMessage(recipientId, events) {
-   var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      message: {
-        attachment: {
-          type: "template",
-          payload: {
-            template_type: "generic",
-            elements: []
-          }
-        }
-      }
-    };
-    console.log('These are the events');
-    console.log(events);
-    //for (let e in events) {
-    Array.from(events).forEach((event) => {
-      //let dateTime = new Date(Date.parse(event.startTime));
-      //let location = eventObjectList[e].location.city;
+	sendEventGenericMessage(recipientId, events) {
+		var messageData = {
+			recipient: {
+			id: recipientId
+			},
+			message: {
+			attachment: {
+				type: "template",
+				payload: {
+				template_type: "generic",
+				elements: []
+				}
+			}
+			}
+		};
+		Array.from(events).forEach((event) => {
+			//let dateTime = new Date(Date.parse(event.startTime));
+			//let location = eventObjectList[e].location.city;
+			const buttons = [];
 
-      messageData.message.attachment.payload.elements.push(
-        {
-          title: event.title,
-          subtitle: timeService.sqlTimestampToDate(event.starttime) || event.starttime, //+ "\n" + location,
-          item_url: event.item_url,
-          image_url: event.image_url,
-          buttons: [{
-            type: 'web_url',
-            url: event.item_url,
-            title: 'Learn More',
-          },
-          {
-            type: "element_share"
-          }
-          ],
-        }
-      );
-    })
-  // }
+			buttons.push({
+				type: 'web_url',
+				url: event.itemUrl || event.fbEventUrl,
+				title: 'Learn More',
+			});
+			
+			if (event.ticketUrl) {
+				buttons.push({type: 'web_url', url: 'event.ticketUrl', title: 'Buy Tickets'});
+			}
 
-    this.callSendAPI(messageData);
-  },
+			buttons.push({type: "element_share"})
 
-  sendGenericMessage(recipientId) {
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      message: {
-        attachment: {
-          type: "template",
-          payload: {
-            template_type: "generic",
-            elements: [{
-              title: "rift",
-              subtitle: "Next-generation virtual reality",
-              item_url: "https://www.oculus.com/en-us/rift/",
-              image_url: "http://messengerdemo.parseapp.com/img/rift.png",
+			messageData.message.attachment.payload.elements.push(
+			{
+				title: event.name,
+				subtitle: `${moment(event.startTime).format('LLLL')} - ${moment(event.endTime).format('LT')}`, 
+				//timeService.sqlTimestampToDate(event.startTime) || event.startTime, //+ "\n" + location,
+				item_url: event.qeUrl || event.fbEventUrl || event.itemUrl,
+				image_url: event.imageUrl,
+				buttons
+			}
+		);
+	})
+	// }
 
-             buttons: [{
-                type: "web_url",
-                url: "https://www.oculus.com/en-us/rift/",
-                title: "Open Web URL"
-              }, {
-                type: "postback",
-                title: "Call Postback",
-                payload: "Payload for first bubble",
-              }],
-            }, {
-              title: "touch",
-              subtitle: "Your Hands, Now in VR",
-              item_url: "https://www.oculus.com/en-us/touch/",
-              image_url: "http://messengerdemo.parseapp.com/img/touch.png",
-              buttons: [{
-                type: "web_url",
-                url: "https://www.oculus.com/en-us/touch/",
-                title: "Open Web URL"
-              }, {
-                type: "postback",
-                title: "Call Postback",
-                payload: "Payload for second bubble",
-              }]
-            }]
-          }
-        }
-      }
-    };
+	this.callSendAPI(messageData);
+	},
 
-    this.callSendAPI(messageData);
-  },
+	sendGenericMessage(recipientId) {
+		var messageData = {
+		recipient: {
+			id: recipientId
+		},
+		message: {
+			attachment: {
+			type: "template",
+			payload: {
+				template_type: "generic",
+				elements: [{
+				title: "rift",
+				subtitle: "Next-generation virtual reality",
+				item_url: "https://www.oculus.com/en-us/rift/",
+				image_url: "http://messengerdemo.parseapp.com/img/rift.png",
+
+				buttons: [{
+					type: "web_url",
+					url: "https://www.oculus.com/en-us/rift/",
+					title: "Open Web URL"
+				}, {
+					type: "postback",
+					title: "Call Postback",
+					payload: "Payload for first bubble",
+				}],
+				}, {
+					title: "touch",
+					subtitle: "Your Hands, Now in VR",
+					item_url: "https://www.oculus.com/en-us/touch/",
+					image_url: "http://messengerdemo.parseapp.com/img/touch.png",
+					buttons: [{
+						type: "web_url",
+						url: "https://www.oculus.com/en-us/touch/",
+						title: "Open Web URL"
+					}, {
+						type: "postback",
+						title: "Call Postback",
+						payload: "Payload for second bubble",
+					}]
+					}]
+				}
+				}
+			}
+		};
+
+    	this.callSendAPI(messageData);
+	},
 
   callSendAPI(messageData) {
     request({
@@ -286,7 +290,11 @@ const sendService = {
         console.log("Successfully sent generic message with id %s to recipient %s",
           messageId, recipientId);
       } else {
-        console.error("Unable to send message.");
+		app.logger.error("Unable to send message.",
+			error
+		);
+
+		console.error("Unable to send message.");
         console.error(response);
         console.error('This is the error: ' + error);
       }
