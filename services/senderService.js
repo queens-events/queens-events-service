@@ -120,8 +120,8 @@ const sendService = {
 		};
 		Array.from(events).forEach((event) => {
 			const buttons = [];
-			console.log(startTime);
-			console.log(endTime);
+			console.log(event.startTime);
+			console.log(event.endTime);
 
 			const startTime = moment(event.startTime, "YYYY-MM-DD HH:mm:ss").format('LLLL');
 			const endTime = moment(event.endTime, "YYYY-MM-DD HH:mm:ss").format('LT');
