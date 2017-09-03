@@ -118,6 +118,7 @@ const sendService = {
 			}
 			}
 		};
+
 		Array.from(events).forEach((event) => {
 			const buttons = [];
 			console.log(event.startTime);
@@ -154,12 +155,12 @@ const sendService = {
 			});
 		})
 
-		this.callSendAPI(messageData);
+		return this.callSendAPI(messageData);
 
 	},
 
 	callSendAPI(messageData) {
-		request({
+		return request({
 			uri: 'https://graph.facebook.com/v2.9/me/messages',
 			qs: { access_token: process.env.PAGE_ACCESS_TOKEN }, //'EAAbMvESBmPABAMr8alGszgzC3QdSA92SZA7A5fDUiZA7rG8pEEbaMO4vcxcOiNa3PZA3fSOt8tdA9yAFjOhQ8q97aZBLWbJ27dUhE7NYRGqO4ekOqZCTbHofC1IX6bp876r8LepxVQYeEOZAP166DLpyxQs66JqwKxcdpGaEBs3MPKFYRLxqxz' },
 			method: 'POST',
