@@ -61,7 +61,7 @@ module.exports = (app) => {
         }
     };
 
-    const receivedMessage = (event) => {
+    const receivedMessage = async (event) => {
         let senderID = event.sender.id;
         let recipientID = event.recipient.id;
         let timeOfMessage = event.timestamp;
@@ -87,7 +87,7 @@ module.exports = (app) => {
                 // This is needed for our bot to figure out the conversation history
             } else if (messageText === 'concerts' || messageText === 'movies' ||
                 messageText === 'adult_socials' || messageText === 'all_ages_socials' || messageText === 'arts_and_theater'||
-                messageText === 'education' || messageText === 'health' || messageText === 'sports'){
+                messageText === 'education' || messageText === 'health' || messageText === 'sports') {
     
                 const events = await Event.findAll({ where: { category: messageText.toUpperCase() }, limit: 5 });
                 
