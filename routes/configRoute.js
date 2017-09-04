@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const moment = require('moment');
 const request = require('request');
 const Router = require('express-promise-router');
 
@@ -69,6 +70,7 @@ module.exports = (app) => {
     
         console.log("Received message for user %d and page %d at %d with message:",
             senderID, recipientID, timeOfMessage);
+        console.log("Converted Time", moment(timeOfMessage));
         console.log(JSON.stringify(message));
     
         let messageId = message.mid;
@@ -88,7 +90,10 @@ module.exports = (app) => {
                 } else if (payload === 'CONCERTS' || payload === 'MOVIES' || payload === 'ARTS_AND_THEATER'||
                     payload === 'EDUCATIONAL' || payload === 'HEALTH' || payload === 'SPORTS') {
 
-                    const events = await Event.findAll({ where: { category: payload }, limit: 5 });
+                    const events = await Event.findAll({
+                        where: { category: payload, startTime: { $gt: moment(timeOfMessage) }},
+                        limit: 5
+                    });
 
                     await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
                 } else if (payload === '19+_SOCIAL' || payload === 'ALL_AGES') {
