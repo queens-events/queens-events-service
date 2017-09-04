@@ -106,8 +106,6 @@ module.exports = (app) => {
 
                     await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
                 }
-            } else {
-                sendService.sendTextMessage(senderID, "I'm sorry, I don't understand english yet!");
             }
 
             sendService.sendEventQuickReplies(senderID);
