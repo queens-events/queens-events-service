@@ -42,7 +42,7 @@ const sendService = {
 			"id": recipientId
 			},
 			"message":{
-			"text":"Pick an event filter:",
+			"text":"Pick a category:",
 			"quick_replies": [
 				{
 					"content_type":"text",
