@@ -82,6 +82,7 @@ module.exports = (app) => {
                 if (messageText.toUpperCase() === 'GET STARTED') {
                     console.log('IT SHOULD WORK');
                     greetingMessage(senderID);
+                    return true;
                 }
             }
             else if (message.quick_reply.payload) {
