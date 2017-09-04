@@ -28,7 +28,7 @@ module.exports = (app) => {
         return sessionId;
     };
 
-    const processPostback = async (event) => {
+    const processPostback = (event) => {
         var senderId = event.sender.id;
         var payload = event.postback.payload;
       
@@ -55,7 +55,7 @@ module.exports = (app) => {
                  
                 let  message = greeting + "My name is STOMO. I can tell you various details regarding events managed by Queens Events! What events would you like to know about?";
                 
-                await sendService.sendTextMessage(senderId, message);
+                sendService.sendTextMessage(senderId, message);
                 sendService.sendEventQuickReplies(senderId);
             });
         }
