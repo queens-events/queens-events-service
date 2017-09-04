@@ -76,14 +76,10 @@ module.exports = (app) => {
 
         try {
             const sessionId = findOrCreateSession(senderID);
-            console.log('make it here?');
-            if (messageText) {
-                console.log('we made it here!');
-                if (messageText.toUpperCase() === 'GET STARTED') {
-                    console.log('IT SHOULD WORK');
-                    greetingMessage(senderID);
-                    return true;
-                }
+
+            if (messageText.toUpperCase() === 'GET STARTED') {
+                greetingMessage(senderID);
+                return true;
             }
             else if (message.quick_reply.payload) {
                 const payload = message.quick_reply.payload;
