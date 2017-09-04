@@ -106,16 +106,16 @@ const sendService = {
 	sendEventGenericMessage(recipientId, events) {
 		let messageData = {
 			recipient: {
-			id: recipientId
+				id: recipientId
 			},
 			message: {
-			attachment: {
-				type: "template",
-				payload: {
-				template_type: "generic",
-				elements: []
+				attachment: {
+					type: "template",
+					payload: {
+						template_type: "generic",
+						elements: []
+					}
 				}
-			}
 			}
 		};
 
