@@ -104,6 +104,7 @@ const sendService = {
   	},
 
 	sendEventGenericMessage(recipientId, events) {
+		console.log('is the method called?');
 		let messageData = {
 			recipient: {
 				id: recipientId
@@ -148,7 +149,7 @@ const sendService = {
 				buttons
 			});
 		})
-
+		console.log('is the message sent?');
 		return this.callSendAPI(messageData);
 	},
 

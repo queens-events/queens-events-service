@@ -97,8 +97,6 @@ module.exports = (app) => {
                         limit: 5
                     });
 
-                    console.log(events);
-
                     await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
                 } else if (payload === '19+_SOCIAL' || payload === 'ALL_AGES') {
                     const events = await Event.findAll({ 
