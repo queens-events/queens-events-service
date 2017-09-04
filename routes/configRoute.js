@@ -97,7 +97,7 @@ module.exports = (app) => {
                     payload = '19+_social';
                 }
 
-                const events = await Event.findAll({ where: { tags: payload.toUpperCase() } });
+                const events = await Event.findAll({ where: { tag: payload.toUpperCase() } });
 
                 await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
             } else {
