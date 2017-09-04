@@ -97,6 +97,8 @@ module.exports = (app) => {
                         limit: 5
                     });
 
+                    console.log(events);
+
                     await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
                 } else if (payload === '19+_SOCIAL' || payload === 'ALL_AGES') {
                     const events = await Event.findAll({ 
@@ -111,8 +113,8 @@ module.exports = (app) => {
             }
 
             sendService.sendEventQuickReplies(senderID);
-        } catch (err) {
-            console.log(err);
+        } catch (error) {
+            console.log(error);
             
             // app.logger.error('Something went wrong inside recievedMessage', {
             //     message: err || '',
