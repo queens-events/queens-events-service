@@ -160,7 +160,6 @@ const sendService = {
 				qs: { access_token: process.env.PAGE_ACCESS_TOKEN }, //'EAAbMvESBmPABAMr8alGszgzC3QdSA92SZA7A5fDUiZA7rG8pEEbaMO4vcxcOiNa3PZA3fSOt8tdA9yAFjOhQ8q97aZBLWbJ27dUhE7NYRGqO4ekOqZCTbHofC1IX6bp876r8LepxVQYeEOZAP166DLpyxQs66JqwKxcdpGaEBs3MPKFYRLxqxz' },
 				method: 'POST',
 				json: messageData
-
 			}, function (error, response, body) {
 				if (!error && response.statusCode == 200) {
 					let recipientId = body.recipient_id;
@@ -170,6 +169,7 @@ const sendService = {
 						messageId, recipientId);
 					resolve(true);
 				} else {
+					console.log(error);
 					reject(error);
 				}
 			});
