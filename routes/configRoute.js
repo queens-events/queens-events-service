@@ -38,30 +38,30 @@ module.exports = (app) => {
         if (payload === "Greeting") {
           // Get user's first name from the User Profile API
           // and include it in the greeting
-            // request({
-            //     url: "https://graph.facebook.com/v2.6/" + senderId,
-            //     qs: {
-            //         access_token: process.env.PAGE_ACCESS_TOKEN,
-            //         fields: "first_name"
-            //     },
-            //     method: "GET"
-            // }, (error, response, body) => {
-            //     var greeting = "";
-            //     if (error) {
-            //         console.log("Error getting user's name: " +  error);
-            //     }
+        // request({
+        //     url: "https://graph.facebook.com/v2.6/" + senderId,
+        //     qs: {
+        //         access_token: process.env.PAGE_ACCESS_TOKEN,
+        //         fields: "first_name"
+        //     },
+        //     method: "GET"
+        // }, (error, response, body) => {
+        //     var greeting = "";
+        //     if (error) {
+        //         console.log("Error getting user's name: " +  error);
+        //     }
 
-            //     else {
-            //         var bodyObj = JSON.parse(body);
-            //         name = bodyObj.first_name;
-            //         greeting = "Hi " + name + ". ";
-            //     }
-                 
-            //     let  message = greeting + "My name is STOMO. I can tell you various details regarding events managed by Queens Events! What events would you like to know about?";
+        //     else {
+        //         var bodyObj = JSON.parse(body);
+        //         name = bodyObj.first_name;
+        //         greeting = "Hi " + name + ". ";
+        //     }
                 
-            //     await sendService.sendTextMessage(senderId, message);
-            //     sendService.sendEventQuickReplies(senderId);
-            // });
+        //     let  message = greeting + "My name is STOMO. I can tell you various details regarding events managed by Queens Events! What events would you like to know about?";
+            
+        //     await sendService.sendTextMessage(senderId, message);
+        //     sendService.sendEventQuickReplies(senderId);
+        // });
             try {
                 const responseBody = await request({
                     url: "https://graph.facebook.com/v2.6/" + senderId,
@@ -93,7 +93,7 @@ module.exports = (app) => {
                 await sendService.sendTextMessage(senderId, message);
                 sendService.sendEventQuickReplies(senderId);
             } catch (err) {
-                console.err(err);
+                console.error(err);
             }
         }
     };
