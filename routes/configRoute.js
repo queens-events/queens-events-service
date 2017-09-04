@@ -76,7 +76,15 @@ module.exports = (app) => {
 
         try {
             const sessionId = findOrCreateSession(senderID);
-            if (message.quick_reply.payload) {
+            console.log('make it here?');
+            if (messageText) {
+                console.log('we made it here!');
+                if (messageText.toUpperCase() === 'GET STARTED') {
+                    console.log('IT SHOULD WORK');
+                    greetingMessage(senderID);
+                }
+            }
+            else if (message.quick_reply.payload) {
                 const payload = message.quick_reply.payload;
                 if (payload === 'SOON') {
                     const events = await Event.findAll({
@@ -102,13 +110,6 @@ module.exports = (app) => {
                     });
 
                     await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
-                }
-            }
-            else if (messageText) {
-                console.log('we made it here!');
-                if (messageText.toUpperCase() === 'GET STARTED') {
-                    console.log('IT SHOULD WORK');
-                    greetingMessage(senderID);
                 }
             }
 
