@@ -112,10 +112,12 @@ module.exports = (app) => {
 
             sendService.sendEventQuickReplies(senderID);
         } catch (err) {
-            app.logger.error('Something went wrong inside recievedMessage', {
-                message: err.message || '',
-                stack: err.stack || '',
-            });
+            console.log(err);
+            
+            // app.logger.error('Something went wrong inside recievedMessage', {
+            //     message: err || '',
+            //     stack: err.stack || '',
+            // });
         }
     };
 
