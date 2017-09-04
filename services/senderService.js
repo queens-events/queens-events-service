@@ -148,6 +148,7 @@ const sendService = {
 				buttons
 			});
 		})
+		console.log(messageData);
 		return this.callSendAPI(messageData);
 	},
 
