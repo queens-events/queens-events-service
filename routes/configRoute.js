@@ -1,6 +1,8 @@
 const _ = require('lodash');
 const moment = require('moment');
 const request = require('request');
+const axios = require('axios');
+const querystring = require('querystring');
 const Router = require('express-promise-router');
 
 const namespace = '/';
@@ -29,36 +31,58 @@ module.exports = (app) => {
         return sessionId;
     };
 
-    const processPostback = (event) => {
+    const processPostback = async (event) => {
         var senderId = event.sender.id;
         var payload = event.postback.payload;
       
         if (payload === "Greeting") {
           // Get user's first name from the User Profile API
           // and include it in the greeting
-            request({
-                url: "https://graph.facebook.com/v2.6/" + senderId,
-                qs: {
-                    access_token: process.env.PAGE_ACCESS_TOKEN,
-                    fields: "first_name"
-                },
-                method: "GET"
-            }, (error, response, body) => {
-                var greeting = "";
-                if (error) {
-                    console.log("Error getting user's name: " +  error);
-                } 
-                else {
-                    var bodyObj = JSON.parse(body);
-                    name = bodyObj.first_name;
-                    greeting = "Hi " + name + ". ";
-                }
+            // request({
+            //     url: "https://graph.facebook.com/v2.6/" + senderId,
+            //     qs: {
+            //         access_token: process.env.PAGE_ACCESS_TOKEN,
+            //         fields: "first_name"
+            //     },
+            //     method: "GET"
+            // }, (error, response, body) => {
+            //     var greeting = "";
+            //     if (error) {
+            //         console.log("Error getting user's name: " +  error);
+            //     }
+
+            //     else {
+            //         var bodyObj = JSON.parse(body);
+            //         name = bodyObj.first_name;
+            //         greeting = "Hi " + name + ". ";
+            //     }
                  
-                let  message = greeting + "My name is STOMO. I can tell you various details regarding events managed by Queens Events! What events would you like to know about?";
+            //     let  message = greeting + "My name is STOMO. I can tell you various details regarding events managed by Queens Events! What events would you like to know about?";
                 
-                sendService.sendTextMessage(senderId, message);
-                sendService.sendEventQuickReplies(senderId);
-            });
+            //     await sendService.sendTextMessage(senderId, message);
+            //     sendService.sendEventQuickReplies(senderId);
+            // });
+
+            const response = await axios.get('https://graph.facebook.com/v2.6/', querystring.stringify({
+                access_token: process.env.PAGE_ACCESS_TOKEN,
+                fields: "first_name"
+            }));
+
+            var greeting = "";
+            if (error) {
+                console.log("Error getting user's name: " +  error);
+            }
+
+            else {
+                let body = JSON.parse(response.body);
+                name = bodyObj.first_name;
+                greeting = "Hi " + name + ". ";
+            }
+             
+            let  message = greeting + "My name is STOMO. I can tell you various details regarding events managed by Queens Events! What events would you like to know about?";
+            
+            await sendService.sendTextMessage(senderId, message);
+            sendService.sendEventQuickReplies(senderId);
         }
     };
 
