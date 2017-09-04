@@ -104,7 +104,7 @@ const sendService = {
   	},
 
 	sendEventGenericMessage(recipientId, events) {
-		var messageData = {
+		let messageData = {
 			recipient: {
 			id: recipientId
 			},
@@ -156,32 +156,31 @@ const sendService = {
 		})
 
 		return this.callSendAPI(messageData);
-
 	},
 
 	callSendAPI(messageData) {
-		return request({
-			uri: 'https://graph.facebook.com/v2.9/me/messages',
-			qs: { access_token: process.env.PAGE_ACCESS_TOKEN }, //'EAAbMvESBmPABAMr8alGszgzC3QdSA92SZA7A5fDUiZA7rG8pEEbaMO4vcxcOiNa3PZA3fSOt8tdA9yAFjOhQ8q97aZBLWbJ27dUhE7NYRGqO4ekOqZCTbHofC1IX6bp876r8LepxVQYeEOZAP166DLpyxQs66JqwKxcdpGaEBs3MPKFYRLxqxz' },
-			method: 'POST',
-			json: messageData
+		return new Promise((resolve, reject)=> {
+			request({
+				uri: 'https://graph.facebook.com/v2.9/me/messages',
+				qs: { access_token: process.env.PAGE_ACCESS_TOKEN }, //'EAAbMvESBmPABAMr8alGszgzC3QdSA92SZA7A5fDUiZA7rG8pEEbaMO4vcxcOiNa3PZA3fSOt8tdA9yAFjOhQ8q97aZBLWbJ27dUhE7NYRGqO4ekOqZCTbHofC1IX6bp876r8LepxVQYeEOZAP166DLpyxQs66JqwKxcdpGaEBs3MPKFYRLxqxz' },
+				method: 'POST',
+				json: messageData
 
-		}, function (error, response, body) {
-			if (!error && response.statusCode == 200) {
-			var recipientId = body.recipient_id;
-			var messageId = body.message_id;
+			}, function (error, response, body) {
+				if (!error && response.statusCode == 200) {
+					let recipientId = body.recipient_id;
+					let messageId = body.message_id;
 
-			console.log("Successfully sent generic message with id %s to recipient %s",
-				messageId, recipientId);
-			} else {
-			app.logger.error("Unable to send message.",
-				error
-			);
-
-			console.error("Unable to send message.");
-			console.error(response);
-			console.error('This is the error: ' + error);
-			}
+					console.log("Successfully sent generic message with id %s to recipient %s",
+						messageId, recipientId);
+					resolve(true);
+				} else {
+					app.logger.error("Unable to send message.",
+						error
+					);
+					reject(error);
+				}
+			});
 		});
 	}
 }
