@@ -1,6 +1,6 @@
+const _ = require('lodash');
 const request = require('request');
 const moment = require('moment');
-const timeService = require('./timeService');
 
 const sendService = {
 	sendTextMessage(recipientId, messageText, quickReplies) {
@@ -39,7 +39,7 @@ const sendService = {
 	sendEventQuickReplies(recipientId) {
 		const choiceData = {
 			"recipient":{
-			"id": recipientId
+				"id": recipientId
 			},
 			"message":{
 			"text":"Pick a category:",
@@ -119,7 +119,7 @@ const sendService = {
 			}
 		};
 
-		Array.from(events).forEach((event) => {
+		_.forEach(events, (event) => {
 			const buttons = [];
 
 			const startTime = moment(event.startTime).subtract(4, 'hours').format('LLLL');

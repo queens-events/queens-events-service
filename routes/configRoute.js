@@ -26,27 +26,31 @@ module.exports = (app) => {
         return sessionId;
     };
 
+    const greetingMessage = async (senderID) => {
+        const responseBody = await request({
+            url: "https://graph.facebook.com/v2.6/" + senderID,
+            qs: {
+                access_token: process.env.PAGE_ACCESS_TOKEN,
+                fields: "first_name"
+            },
+            method: "GET"
+        });
+
+        let bodyObj = JSON.parse(responseBody);
+         
+        let  message = `Hi ${bodyObj.first_name}. Choose a category to see upcoming events at Queen's and downtown Kingston`;
+        
+        await sendService.sendTextMessage(senderID, message);
+        sendService.sendEventQuickReplies(senderID);
+    }
+
     const processPostback = async (event) => {
-        var senderId = event.sender.id;
-        var payload = event.postback.payload;
+        let senderID = event.sender.id;
+        let payload = event.postback.payload;
       
         try {
             if (payload === "Greeting") {
-                const responseBody = await request({
-                    url: "https://graph.facebook.com/v2.6/" + senderId,
-                    qs: {
-                        access_token: process.env.PAGE_ACCESS_TOKEN,
-                        fields: "first_name"
-                    },
-                    method: "GET"
-                });
-
-                let bodyObj = JSON.parse(responseBody);
-                 
-                let  message = `Hi ${bodyObj.first_name}. Choose a category to see upcoming events at Queen's and downtown Kingston`;
-                
-                await sendService.sendTextMessage(senderId, message);
-                sendService.sendEventQuickReplies(senderId);
+                greetingMessage(senderID);
             }
         } catch (err) {
             app.logger.error('Something went wrong inside recievedMessage', {
@@ -99,6 +103,11 @@ module.exports = (app) => {
                     });
 
                     await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
+                }
+            }
+            else if (messageText) {
+                if (messageText === 'Get Started' || messageText === 'get started') {
+                    greetingMessage(senderID);
                 }
             }
 
