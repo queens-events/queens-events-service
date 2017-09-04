@@ -47,55 +47,55 @@ const sendService = {
 				{
 					"content_type":"text",
 					"title":"Soon",
-					"payload":"soon",
+					"payload":"SOON",
 					"image_url": "https://s3.ca-central-1.amazonaws.com/queens-events/icons/events_icon.png"
 				},
 				{
 					"content_type":"text",
 					"title":"Concerts",
-					"payload":"concerts",
+					"payload":"CONCERTS",
 					"image_url": "https://s3.ca-central-1.amazonaws.com/queens-events/icons/concert_icon.png"
 				},
 				{
 					"content_type":"text",
 					"title":"Movies",
-					"payload":"movies",
+					"payload":"MOVIES",
 					"image_url": "https://s3.ca-central-1.amazonaws.com/queens-events/icons/movie_icon.png"
 				},
 				{
 					"content_type":"text",
 					"title":"19+ Socials",
-					"payload":"adult_socials",
+					"payload":"19+_SOCIAL",
 					"image_url": "https://s3.ca-central-1.amazonaws.com/queens-events/icons/19_social_icon.png"
 				},
 				{
 					"content_type":"text",
 					"title":"All Ages Socials",
-					"payload":"all_ages_socials",
+					"payload":"ALL_AGES",
 					"image_url": "https://s3.ca-central-1.amazonaws.com/queens-events/icons/child_icon.png"
 				},
 				{
 					"content_type":"text",
 					"title":"Arts",
-					"payload":"arts_and_theater",
+					"payload":"ARTS_AND_THEATER",
 					"image_url": "https://s3.ca-central-1.amazonaws.com/queens-events/icons/arts_icon.png"
 				},
 				{
 					"content_type":"text",
 					"title":"Educational",
-					"payload":"educational",
+					"payload":"EDUCATIONAL",
 					"image_url": "https://s3.ca-central-1.amazonaws.com/queens-events/icons/edu_icon.png"
 				},
 				{
 					"content_type":"text",
 					"title":"Health",
-					"payload":"health",
+					"payload":"HEALTH",
 					"image_url": "https://s3.ca-central-1.amazonaws.com/queens-events/icons/health_icon.png"
 				},
 				{
 					"content_type":"text",
 					"title":"Sports",
-					"payload":"sports",
+					"payload":"SPORTS",
 					"image_url": "https://s3.ca-central-1.amazonaws.com/queens-events/icons/sports_icon.png"
 				}]
 			}
@@ -124,8 +124,8 @@ const sendService = {
 			console.log(event.startTime);
 			console.log(event.endTime);
 
-			const startTime = moment.utc(event.startTime, "YYYY-MM-DD HH:mm:ss").format('LLLL');
-			const endTime = moment.utc(event.endTime, "YYYY-MM-DD HH:mm:ss").format('LT');
+			const startTime = moment.utc(event.startTime, "YYYY-MM-DD HH:mm:ss").local().format('LLLL');
+			const endTime = moment.utc(event.endTime, "YYYY-MM-DD HH:mm:ss").local().format('LT');
 			console.log(startTime);
 			console.log(endTime);
 
@@ -142,8 +142,6 @@ const sendService = {
 			}
 
 			buttons.push({type: "element_share"})
-
-			//timeService.sqlTimestampToDate(event.startTime) || event.startTime, //+ "\n" + location,
 
 			messageData.message.attachment.payload.elements.push(
 			{
@@ -175,9 +173,6 @@ const sendService = {
 						messageId, recipientId);
 					resolve(true);
 				} else {
-					app.logger.error("Unable to send message.",
-						error
-					);
 					reject(error);
 				}
 			});

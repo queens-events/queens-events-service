@@ -80,23 +80,19 @@ module.exports = (app) => {
         try {
             const sessionId = findOrCreateSession(senderID);
             if (payload) {
-                if (messageText === 'soon') { 
+                if (messageText === 'SOON') {
                     const events = await Event.findAll({ limit: 5 });
 
                     await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
 
-                } else if (payload === 'concerts' || payload === 'movies' || payload === 'arts_and_theater'||
-                    payload === 'education' || payload === 'health' || payload === 'sports') {
+                } else if (payload === 'CONCERTS' || payload === 'MOVIES' || payload === 'ARTS_AND_THEATER'||
+                    payload === 'EDUCATIONAL' || payload === 'HEATLTH' || payload === 'SPORTS') {
 
-                    const events = await Event.findAll({ where: { category: payload.toUpperCase() }, limit: 5 });
+                    const events = await Event.findAll({ where: { category: payload }, limit: 5 });
 
                     await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
-                } else if (payload === 'adult_socials' || payload === 'all_ages_social') {
-                    if (payload === 'adult_socials') {
-                        payload = '19+_SOCIAL';
-                    }
-
-                    const events = await Event.findAll({ where: { tag: payload.toUpperCase() } });
+                } else if (payload === '19+_SOCIAL' || payload === 'ALL_AGES') {
+                    const events = await Event.findAll({ where: { tag: payload }, limit: 5 });
 
                     await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
                 }
