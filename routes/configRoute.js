@@ -43,8 +43,7 @@ module.exports = (app) => {
 
                 let bodyObj = JSON.parse(responseBody);
                  
-                let  message = `Hi ${bodyObj.first_name}. My name is QE Bot. I can tell you various details regarding events managed by Queens Events! 
-If you have any other questions, feel free to ask and we'll get back to you as soon as possible. What events would you like to know about?`;
+                let  message = `Hi ${bodyObj.first_name}. Choose a category to see upcoming events at Queen's and downtown Kingston`;
                 
                 await sendService.sendTextMessage(senderId, message);
                 sendService.sendEventQuickReplies(senderId);
