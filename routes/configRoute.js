@@ -74,55 +74,38 @@ module.exports = (app) => {
         let messageId = message.mid;
         let messageText = message.text;
         let messageAttachments = message.attachments;
-        //const {text, attachments} = message;
+
         const sessionId = findOrCreateSession(senderID);
     
         if (messageText) {
             const payload = message.quick_reply.payload;
-            // If we receive a text message, check to see if it matches a keyword
-            // and send back the template example. Otherwise, just echo the text we received.
-            if(messageText === 'Popular' || messageText === 'Close' || messageText === 'Soon') {
-                filterChoice = messageText;
-                sendService.sendLocationPrompt(sessions[sessionId].fbid);
-                // We retrieve the user's current session, or create one if it doesn't exist
-                // This is needed for our bot to figure out the conversation history
-            } else if (payload === 'concerts' || payload === 'movies' ||
-                payload === 'adult_socials' || payload === 'all_ages_socials' || payload === 'arts_and_theater'||
+
+            if (messageText === 'Soon') { 
+                const events = await Event.findAll({ limit: 5 });
+                
+                await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
+
+            } else if (payload === 'concerts' || payload === 'movies' || payload === 'arts_and_theater'||
                 payload === 'education' || payload === 'health' || payload === 'sports') {
     
                 const events = await Event.findAll({ where: { category: payload.toUpperCase() }, limit: 5 });
 
-                const result = await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
+                await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
+            } else if (payload === 'adult_socials' || payload === 'all_ages_social') {
 
-                console.log("This is a result for generic messages", result);
-
-                await sendService.sendEventQuickReplies(senderID);
-            } 
-            else if (messageAttachments) {
-                if (messageAttachments[0].type === "location"){
-                    //sendLocalEventFilterChoice(senderID);
-                    let sortBy;
-                    switch(filterChoice){
-                    case 'Close':
-                        sortBy = 'distance'
-                        break;
-                    case 'Soon':
-                        sortBy = 'time'
-                        break;
-                    case 'Popular':
-                        sortBy = 'popularity';
-                        break;
-                    default:
-                        break;
-                    }
-                    let {lat, long} = messageAttachments[0].payload.coordinates
-                    getLocalEvents(senderID, lat, long, sortBy, null); //senderID
-                } 
-                else {
-                    sendService.sendTextMessage(senderID, "Message with attachment received");
+                if (payload === 'adult_socials') {
+                    payload = '19+_social';
                 }
+
+                const events = await Event.findAll({ where: { tags: payload.toUpperCase() } });
+
+                await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
+            } else {
+                sendService.sendTextMessage(senderID, "I'm sorry, I don't understand english yet!");
             }
         }
+
+        await sendService.sendEventQuickReplies(senderID);
     };
 
     const root = async (req, res) => {
