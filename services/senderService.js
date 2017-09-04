@@ -160,7 +160,6 @@ const sendService = {
 				method: 'POST',
 				json: messageData
 			}, function (error, response, body) {
-				console.log(response);
 				if (!error && response.statusCode == 200) {
 					let recipientId = body.recipient_id;
 					let messageId = body.message_id;
@@ -169,7 +168,6 @@ const sendService = {
 						messageId, recipientId);
 					resolve(true);
 				} else {
-					console.log(error);
 					reject(error);
 				}
 			});

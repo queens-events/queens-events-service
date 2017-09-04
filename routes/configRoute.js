@@ -87,6 +87,8 @@ module.exports = (app) => {
                         limit: 5
                     });
 
+                    console.log(events);
+
                     await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
 
                 } else if (payload === 'CONCERTS' || payload === 'MOVIES' || payload === 'ARTS_AND_THEATER' ||
@@ -112,12 +114,10 @@ module.exports = (app) => {
 
             sendService.sendEventQuickReplies(senderID);
         } catch (error) {
-            console.log(error);
-            
-            // app.logger.error('Something went wrong inside recievedMessage', {
-            //     message: err || '',
-            //     stack: err.stack || '',
-            // });
+            app.logger.error('Something went wrong inside recievedMessage', {
+                message: err || '',
+                stack: err.stack || '',
+            });
         }
     };
 
