@@ -104,7 +104,6 @@ const sendService = {
   	},
 
 	sendEventGenericMessage(recipientId, events) {
-		console.log('is the method called?');
 		let messageData = {
 			recipient: {
 				id: recipientId
@@ -149,7 +148,6 @@ const sendService = {
 				buttons
 			});
 		})
-		console.log('is the message sent?');
 		return this.callSendAPI(messageData);
 	},
 
@@ -161,6 +159,7 @@ const sendService = {
 				method: 'POST',
 				json: messageData
 			}, function (error, response, body) {
+				console.log(response);
 				if (!error && response.statusCode == 200) {
 					let recipientId = body.recipient_id;
 					let messageId = body.message_id;
