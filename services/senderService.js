@@ -77,7 +77,7 @@ const sendService = {
 				{
 					"content_type":"text",
 					"title":"Arts",
-					"payload":"ARTS_AND_THEATER",
+					"payload":"ARTS",
 					"image_url": "https://s3.ca-central-1.amazonaws.com/queens-events/icons/arts_icon.png"
 				},
 				{
