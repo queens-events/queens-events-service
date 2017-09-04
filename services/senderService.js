@@ -129,13 +129,13 @@ const sendService = {
 
 			buttons.push({
 				type: 'web_url',
-				url: event.itemUrl || event.fbEventUrl,
+				url: event.itemUrl || event.fbEventUrl || event.qeUrl,
 				title: 'Learn More',
 			});
 			
-			// if (event.ticketUrl) {
-			// 	buttons.push({type: 'web_url', url: 'event.ticketUrl', title: 'Buy Tickets'});
-			// }
+			if (event.ticketUrl) {
+				buttons.push({type: 'web_url', url: 'event.ticketUrl', title: 'Buy Tickets'});
+			}
 
 			buttons.push({type: "element_share"})
 
@@ -149,7 +149,6 @@ const sendService = {
 			});
 		})
 
-		console.log("MessageData", messageData.message.attachment.payload);
 		return this.callSendAPI(messageData);
 	},
 
