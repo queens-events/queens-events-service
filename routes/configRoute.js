@@ -109,8 +109,8 @@ module.exports = (app) => {
             sendService.sendEventQuickReplies(senderID);
         } catch (error) {
             app.logger.error('Something went wrong inside recievedMessage', {
-                message: err || '',
-                stack: err.stack || '',
+                message: error.message || '',
+                stack: error.stack || '',
             });
         }
     };
