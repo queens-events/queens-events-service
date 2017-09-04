@@ -79,7 +79,7 @@ module.exports = (app) => {
     
                 let greeting = "";
 
-                let body = JSON.parse(responseBody);
+                let bodyObj = JSON.parse(responseBody);
                 name = bodyObj.first_name;
                 greeting = "Hi " + name + ". ";
                  
