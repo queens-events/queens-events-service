@@ -47,7 +47,7 @@ const sendService = {
 				{
 					"content_type":"text",
 					"title":"Soon",
-					"payload":"Soon",
+					"payload":"soon",
 					"image_url": "https://s3.ca-central-1.amazonaws.com/queens-events/icons/events_icon.png"
 				},
 				{

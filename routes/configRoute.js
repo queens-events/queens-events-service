@@ -28,7 +28,7 @@ module.exports = (app) => {
         return sessionId;
     };
 
-    const processPostback = (event) => {
+    const processPostback = async (event) => {
         var senderId = event.sender.id;
         var payload = event.postback.payload;
       
@@ -55,7 +55,7 @@ module.exports = (app) => {
                  
                 let  message = greeting + "My name is STOMO. I can tell you various details regarding events managed by Queens Events! What events would you like to know about?";
                 
-                sendService.sendTextMessage(senderId, message);
+                await sendService.sendTextMessage(senderId, message);
                 sendService.sendEventQuickReplies(senderId);
             });
         }
@@ -75,38 +75,42 @@ module.exports = (app) => {
         let messageText = message.text;
         let messageAttachments = message.attachments;
 
-        const sessionId = findOrCreateSession(senderID);
-    
-        if (messageText) {
-            const payload = message.quick_reply.payload;
+        const payload = message.quick_reply.payload;
 
-            if (messageText === 'Soon') { 
-                const events = await Event.findAll({ limit: 5 });
-                
-                await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
+        try {
+            const sessionId = findOrCreateSession(senderID);
+            if (payload) {
+                if (messageText === 'soon') { 
+                    const events = await Event.findAll({ limit: 5 });
 
-            } else if (payload === 'concerts' || payload === 'movies' || payload === 'arts_and_theater'||
-                payload === 'education' || payload === 'health' || payload === 'sports') {
-    
-                const events = await Event.findAll({ where: { category: payload.toUpperCase() }, limit: 5 });
+                    await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
 
-                await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
-            } else if (payload === 'adult_socials' || payload === 'all_ages_social') {
+                } else if (payload === 'concerts' || payload === 'movies' || payload === 'arts_and_theater'||
+                    payload === 'education' || payload === 'health' || payload === 'sports') {
 
-                if (payload === 'adult_socials') {
-                    payload = '19+_social';
+                    const events = await Event.findAll({ where: { category: payload.toUpperCase() }, limit: 5 });
+
+                    await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
+                } else if (payload === 'adult_socials' || payload === 'all_ages_social') {
+                    if (payload === 'adult_socials') {
+                        payload = '19+_SOCIAL';
+                    }
+
+                    const events = await Event.findAll({ where: { tag: payload.toUpperCase() } });
+
+                    await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
                 }
-
-                const events = await Event.findAll({ where: { tag: payload.toUpperCase() } });
-
-                await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
             } else {
                 sendService.sendTextMessage(senderID, "I'm sorry, I don't understand english yet!");
-                sendService.sendEventQuickReplies(senderID);
             }
-        }
 
-        sendService.sendEventQuickReplies(senderID);
+            sendService.sendEventQuickReplies(senderID);
+        } catch (err) {
+            app.logger.error('Something went wrong inside recievedMessage', {
+                message: err.message || '',
+                stack: err.stack || '',
+            });
+        }
     };
 
     const root = async (req, res) => {
