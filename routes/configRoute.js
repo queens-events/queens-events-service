@@ -107,9 +107,7 @@ module.exports = (app) => {
         let messageText = message.text;
         let messageAttachments = message.attachments;
 
-        if (message.quick_reply) {
-            const payload = message.quick_reply.payload;
-        }
+        const payload = message.quick_reply.payload;
 
         try {
             const sessionId = findOrCreateSession(senderID);
