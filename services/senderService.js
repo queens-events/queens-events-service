@@ -20,7 +20,7 @@ const sendService = {
 			}
 		};
 
-		this.callSendAPI(messageData);
+		return this.callSendAPI(messageData);
 	},
 
 	sendLocationPrompt(recipientId) {
