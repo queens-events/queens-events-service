@@ -102,10 +102,11 @@ module.exports = (app) => {
                 await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
             } else {
                 sendService.sendTextMessage(senderID, "I'm sorry, I don't understand english yet!");
+                sendService.sendEventQuickReplies(senderID);
             }
         }
 
-        await sendService.sendEventQuickReplies(senderID);
+        sendService.sendEventQuickReplies(senderID);
     };
 
     const root = async (req, res) => {

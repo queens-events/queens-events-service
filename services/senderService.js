@@ -124,8 +124,8 @@ const sendService = {
 			console.log(event.startTime);
 			console.log(event.endTime);
 
-			const startTime = moment(event.startTime, "YYYY-MM-DD HH:mm:ss").format('LLLL');
-			const endTime = moment(event.endTime, "YYYY-MM-DD HH:mm:ss").format('LT');
+			const startTime = moment.utc(event.startTime, "YYYY-MM-DD HH:mm:ss").format('LLLL');
+			const endTime = moment.utc(event.endTime, "YYYY-MM-DD HH:mm:ss").format('LT');
 			console.log(startTime);
 			console.log(endTime);
 

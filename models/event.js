@@ -96,7 +96,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.DATE,
             allowNull: false,
         },
-        endtime: {
+        endTime: {
             type: DataTypes.DATE,
             allowNull: false,
         },

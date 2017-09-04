@@ -110,7 +110,7 @@ module.exports = {
 					type: Sequelize.DATE,
 					allowNull: false,
 				},
-				endtime: {
+				endTime: {
 					type: Sequelize.DATE,
 					allowNull: false,
 				},
