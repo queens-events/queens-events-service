@@ -86,7 +86,7 @@ module.exports = (app) => {
                     await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
 
                 } else if (payload === 'CONCERTS' || payload === 'MOVIES' || payload === 'ARTS_AND_THEATER'||
-                    payload === 'EDUCATIONAL' || payload === 'HEATLTH' || payload === 'SPORTS') {
+                    payload === 'EDUCATIONAL' || payload === 'HEALTH' || payload === 'SPORTS') {
 
                     const events = await Event.findAll({ where: { category: payload }, limit: 5 });
 

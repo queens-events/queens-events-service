@@ -124,10 +124,10 @@ const sendService = {
 			console.log(event.startTime);
 			console.log(event.endTime);
 
-			const startTime = moment(event.startTime).format('LLLL');
-			//moment.utc(event.startTime, "YYYY-MM-DD HH:mm:ss").local().format('LLLL');
-			const endTime = moment(event.startTime).format('LT');
-			//moment.utc(event.endTime, "YYYY-MM-DD HH:mm:ss").local().format('LT');
+			const startTime = moment(event.startTime).utc().format('LLLL');
+			// moment.utc(event.startTime, "YYYY-MM-DD HH:mm:ss").local().format('LLLL');
+			const endTime = moment(event.endTime).utc().format('LT');
+			// moment.utc(event.endTime, "YYYY-MM-DD HH:mm:ss").local().format('LT');
 			console.log(startTime);
 			console.log(endTime);
 
