@@ -81,13 +81,11 @@ module.exports = (app) => {
         try {
             const sessionId = findOrCreateSession(senderID);
             if (payload) {
-                if (messageText === 'SOON') {
+                if (payload === 'SOON') {
                     const events = await Event.findAll({
                         startTime: { $gt: moment(timeOfMessage) },
                         limit: 5
                     });
-
-                    console.log(events);
 
                     await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
 
