@@ -77,16 +77,11 @@ module.exports = (app) => {
                 //     fields: "first_name"
                 // }));
     
-                var greeting = "";
-                if (error) {
-                    console.log("Error getting user's name: " +  error);
-                }
-    
-                else {
-                    let body = JSON.parse(responseBody);
-                    name = bodyObj.first_name;
-                    greeting = "Hi " + name + ". ";
-                }
+                let greeting = "";
+
+                let body = JSON.parse(responseBody);
+                name = bodyObj.first_name;
+                greeting = "Hi " + name + ". ";
                  
                 let  message = greeting + "My name is STOMO. I can tell you various details regarding events managed by Queens Events! What events would you like to know about?";
                 
