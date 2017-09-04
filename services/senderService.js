@@ -133,9 +133,9 @@ const sendService = {
 				title: 'Learn More',
 			});
 			
-			if (event.ticketUrl) {
-				buttons.push({type: 'web_url', url: 'event.ticketUrl', title: 'Buy Tickets'});
-			}
+			// if (event.ticketUrl) {
+			// 	buttons.push({type: 'web_url', url: 'event.ticketUrl', title: 'Buy Tickets'});
+			// }
 
 			buttons.push({type: "element_share"})
 
@@ -148,7 +148,8 @@ const sendService = {
 				buttons
 			});
 		})
-		console.log("MessageData", messageData.attachment.payload);
+
+		console.log("MessageData", messageData.message.attachment.payload);
 		return this.callSendAPI(messageData);
 	},
 
