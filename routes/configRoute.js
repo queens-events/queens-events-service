@@ -1,8 +1,6 @@
 const _ = require('lodash');
 const moment = require('moment');
 const request = require('request-promise');
-const axios = require('axios');
-const querystring = require('querystring');
 const Router = require('express-promise-router');
 
 const namespace = '/';
@@ -49,7 +47,7 @@ module.exports = (app) => {
                 name = bodyObj.first_name;
                 greeting = "Hi " + name + ". ";
                  
-                let  message = greeting + "My name is STOMO. I can tell you various details regarding events managed by Queens Events! What events would you like to know about?";
+                let  message = greeting + "My name is QE Bot. I can tell you various details regarding events managed by Queens Events! What events would you like to know about?";
                 
                 await sendService.sendTextMessage(senderId, message);
                 sendService.sendEventQuickReplies(senderId);
