@@ -40,14 +40,11 @@ module.exports = (app) => {
                     },
                     method: "GET"
                 });
-    
-                let greeting = "";
 
                 let bodyObj = JSON.parse(responseBody);
-                name = bodyObj.first_name;
-                greeting = "Hi " + name + ". ";
                  
-                let  message = greeting + "My name is QE Bot. I can tell you various details regarding events managed by Queens Events! What events would you like to know about?";
+                let  message = `Hi ${bodyObj.first_name}. My name is QE Bot. I can tell you various details regarding events managed by Queens Events! 
+                If you have any other questions, feel free to ask and we'll get back to you as soon as possible. What events would you like to know about?`;
                 
                 await sendService.sendTextMessage(senderId, message);
                 sendService.sendEventQuickReplies(senderId);
