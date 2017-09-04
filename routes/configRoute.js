@@ -83,7 +83,7 @@ module.exports = (app) => {
             if (payload) {
                 if (payload === 'SOON') {
                     const events = await Event.findAll({
-                        startTime: { $gt: moment(timeOfMessage) },
+                        where: { startTime: { $gt: moment(timeOfMessage) }},
                         limit: 5
                     });
 
