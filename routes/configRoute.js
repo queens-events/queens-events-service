@@ -74,11 +74,10 @@ module.exports = (app) => {
         let messageText = message.text;
         let messageAttachments = message.attachments;
 
-        const payload = message.quick_reply.payload;
-
         try {
             const sessionId = findOrCreateSession(senderID);
-            if (payload) {
+            if (message.quick_reply.payload) {
+                const payload = message.quick_reply.payload;
                 if (payload === 'SOON') {
                     const events = await Event.findAll({
                         where: { startTime: { $gt: moment(timeOfMessage) }},
@@ -106,7 +105,9 @@ module.exports = (app) => {
                 }
             }
             else if (messageText) {
-                if (messageText === 'Get Started' || messageText === 'get started') {
+                console.log('we made it here!');
+                if (messageText.toUpperCase() === 'GET STARTED') {
+                    console.log('IT SHOULD WORK');
                     greetingMessage(senderID);
                 }
             }
