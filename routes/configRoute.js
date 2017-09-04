@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const moment = require('moment');
-const request = require('request');
+const request = require('request-promise');
 const axios = require('axios');
 const querystring = require('querystring');
 const Router = require('express-promise-router');
@@ -62,27 +62,39 @@ module.exports = (app) => {
             //     await sendService.sendTextMessage(senderId, message);
             //     sendService.sendEventQuickReplies(senderId);
             // });
-
-            const response = await axios.get('https://graph.facebook.com/v2.6/', querystring.stringify({
-                access_token: process.env.PAGE_ACCESS_TOKEN,
-                fields: "first_name"
-            }));
-
-            var greeting = "";
-            if (error) {
-                console.log("Error getting user's name: " +  error);
+            try {
+                const responseBody = await request({
+                    url: "https://graph.facebook.com/v2.6/" + senderId,
+                    qs: {
+                        access_token: process.env.PAGE_ACCESS_TOKEN,
+                        fields: "first_name"
+                    },
+                    method: "GET"
+                });
+                
+                // await axios.get('https://graph.facebook.com/v2.6/', querystring.stringify({
+                //     access_token: process.env.PAGE_ACCESS_TOKEN,
+                //     fields: "first_name"
+                // }));
+    
+                var greeting = "";
+                if (error) {
+                    console.log("Error getting user's name: " +  error);
+                }
+    
+                else {
+                    let body = JSON.parse(responseBody);
+                    name = bodyObj.first_name;
+                    greeting = "Hi " + name + ". ";
+                }
+                 
+                let  message = greeting + "My name is STOMO. I can tell you various details regarding events managed by Queens Events! What events would you like to know about?";
+                
+                await sendService.sendTextMessage(senderId, message);
+                sendService.sendEventQuickReplies(senderId);
+            } catch (err) {
+                console.err(err);
             }
-
-            else {
-                let body = JSON.parse(response.body);
-                name = bodyObj.first_name;
-                greeting = "Hi " + name + ". ";
-            }
-             
-            let  message = greeting + "My name is STOMO. I can tell you various details regarding events managed by Queens Events! What events would you like to know about?";
-            
-            await sendService.sendTextMessage(senderId, message);
-            sendService.sendEventQuickReplies(senderId);
         }
     };
 
@@ -94,14 +106,15 @@ module.exports = (app) => {
     
         console.log("Received message for user %d and page %d at %d with message:",
             senderID, recipientID, timeOfMessage);
-        console.log("Converted Time", moment(timeOfMessage));
         console.log(JSON.stringify(message));
     
         let messageId = message.mid;
         let messageText = message.text;
         let messageAttachments = message.attachments;
 
-        const payload = message.quick_reply.payload;
+        if (message.quick_reply) {
+            const payload = message.quick_reply.payload;
+        }
 
         try {
             const sessionId = findOrCreateSession(senderID);

@@ -121,15 +121,9 @@ const sendService = {
 
 		Array.from(events).forEach((event) => {
 			const buttons = [];
-			console.log(event.startTime);
-			console.log(event.endTime);
 
 			const startTime = moment(event.startTime).subtract(4, 'hours').format('LLLL');
-			// moment.utc(event.startTime, "YYYY-MM-DD HH:mm:ss").local().format('LLLL');
 			const endTime = moment(event.endTime).subtract(4, 'hours').format('LT');
-			// moment.utc(event.endTime, "YYYY-MM-DD HH:mm:ss").local().format('LT');
-			console.log(startTime);
-			console.log(endTime);
 
 			const dateString = `${startTime} - ${endTime}`;
 
