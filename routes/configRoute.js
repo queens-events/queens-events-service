@@ -80,7 +80,7 @@ module.exports = (app) => {
             if (messageText.toUpperCase() === 'GET STARTED') {
                 greetingMessage(senderID);
                 return true;
-            }
+            } 
             else if (message.quick_reply.payload) {
                 const payload = message.quick_reply.payload;
                 if (payload === 'SOON') {
@@ -109,6 +109,9 @@ module.exports = (app) => {
                     await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
                 }
             }
+            else if (messageText) {
+                await sendService.sendTextMessage(senderID, "Sorry, I don't understand language just yet!");
+            }
 
             sendService.sendEventQuickReplies(senderID);
         } catch (error) {
@@ -121,16 +124,6 @@ module.exports = (app) => {
 
     const root = async (req, res) => {
         res.send("Welcome to QueensEventsService!");
-    };
-
-    const privacy = (req, res) => {
-        res.send(`Privacy Policy
-        
-        Queens Events provides this Privacy Policy to inform users of our policies and procedures regarding the collection, use and disclosure of personally identifiable information received from users of this website, located at https://queensevents.ca ("Site" ).
-        
-        By using our app you are consenting to our processing of your information as set forth in this Privacy Policy now and as amended by us. "Processing" means using cookies on a computer or using or touching information in any way, including, but not limited to, collecting, storing, deleting, using, and combining information, all of which activities will take place in the Canada.
-
-        By visiting our Site and providing information to us, you consent to such transfer to, and processing in the Canada.`)
     };
       
     // Facebook Webhook
@@ -175,7 +168,6 @@ module.exports = (app) => {
         namespace,
         router: Router()
             .get('/', root)
-            .get('/privacy', privacy)
             .get('/webhook', getWebhook)
             .post('/webhook', postWebhook),
     }

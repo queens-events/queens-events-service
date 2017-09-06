@@ -1,5 +1,3 @@
-//const _ = require('lodash');
-//const now = require('../lib/now');
 const venueData = require('../data/venueData.json');
 
 const tableName = 'venue'
