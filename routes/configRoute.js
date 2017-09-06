@@ -110,6 +110,7 @@ module.exports = (app) => {
                 }
             }
             else {
+                console.log("We get here");
                 await sendService.sendTextMessage(senderID, "Sorry, I don't understand language just yet!");
             }
 
