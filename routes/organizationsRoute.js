@@ -31,7 +31,7 @@ module.exports = (app) => {
         }
     };
 
-    const getOrganizationByID = async () => {
+    const getOrganizationByID = async (req, res) => {
         try {
             const organization = await Organization.findOne({ where: { id: req.params.organizationID }});
 
@@ -55,7 +55,7 @@ module.exports = (app) => {
         }
     };
 
-    const postOrganization = async () => {
+    const postOrganization = async (req, res) => {
         try {
             const organization = await Organization.findOne({ where: { id: req.params.organizationID }});
 
@@ -90,7 +90,7 @@ module.exports = (app) => {
         }
     };
 
-    const updateOrganizationByID = async () => {
+    const updateOrganizationByID = async (req, res) => {
         try {
             const organization = await Organization.findOne({ where: { id: req.params.organizationID }});
             

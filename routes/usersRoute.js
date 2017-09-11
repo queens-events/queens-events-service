@@ -12,7 +12,7 @@ const EntityNotFoundError = require('../responses/errors/entityNotFoundError');
 module.exports = (app) => {
     const { Ability, User, Role, UserRole } = app.db;
     
-    const getUsers = async () => {
+    const getUsers = async (req, res) => {
         try {
             const user = await User.findAll();
 
@@ -31,7 +31,7 @@ module.exports = (app) => {
         }
     };
 
-    const getUserByID = async () => {
+    const getUserByID = async (req, res) => {
         try {
             const user = await User.findOne({ where: { id: req.params.userID }});
 
@@ -93,7 +93,7 @@ module.exports = (app) => {
         }
     };
 
-    const updateUserByID = async () => {
+    const updateUserByID = async (req, res) => {
         try {
             // Fetch User
             const user = await User.findOne({

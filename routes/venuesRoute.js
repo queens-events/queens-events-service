@@ -31,7 +31,7 @@ module.exports = (app) => {
         }
     };
 
-    const getVenueByID = async () => {
+    const getVenueByID = async (req, res) => {
         try {
             const venue = await Venue.findOne({ where: { id: req.params.venueID }});
 
@@ -55,7 +55,7 @@ module.exports = (app) => {
         }
     };
 
-    const postVenue = async () => {
+    const postVenue = async (req, res) => {
         try {
             const venue = await Venue.findOne({ where: { id: req.params.venueID }});
 
@@ -90,7 +90,7 @@ module.exports = (app) => {
         }
     };
 
-    const updateVenueByID = async () => {
+    const updateVenueByID = async (req, res) => {
         try {
             const venue = Venue.findOne({ where: { id: req.params.venueID }});
             

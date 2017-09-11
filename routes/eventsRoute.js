@@ -31,7 +31,7 @@ module.exports = (app) => {
         }
     };
 
-    const getEventByID = async () => {
+    const getEventByID = async (req, res) => {
         try {
             const event = await Event.findOne({ where: { id: req.params.eventID }});
 
@@ -55,7 +55,7 @@ module.exports = (app) => {
         }
     };
 
-    const postEvent = async () => {
+    const postEvent = async (req, res) => {
         try {
             const event = await Event.findOne({ where: { id: req.params.eventID }});
 
@@ -90,7 +90,7 @@ module.exports = (app) => {
         }
     };
 
-    const updateEventByID = async () => {
+    const updateEventByID = async (req, res) => {
         try {
             const event = await Event.findOne({ where: { id: req.params.eventID }});
             

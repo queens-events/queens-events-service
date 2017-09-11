@@ -21,6 +21,7 @@
     "dotenv": "^4.0.0",
     "eslint-config-airbnb": "^15.1.0",
     "express": "^4.15.4",
+    "express-jwt": "^5.3.0",
     "express-promise-router": "^2.0.0",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
