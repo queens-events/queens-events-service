@@ -99,20 +99,19 @@ module.exports = {
 			role: 2,
 			abilties: [17]
 		};
-			
-		return queryInterface.bulkInsert('RoleAbility', 
-			[{
 
-			}], {});
+		const roleAbilities = [];
+
+		_.forEach([superUser, user], (user) => {
+			_.forEach(user.abilities, (ability) => {
+				roleAbilities.push({roleId: user.role, abilityId: ability});
+			});
+		});
+			
+		return queryInterface.bulkInsert('RoleAbility', roleAbilities, {});
 	},
 
 	async down(queryInterface, Sequelize) {
-	/*
-		Add reverting commands here.
-		Return a promise to correctly handle asynchronicity.
-
-		Example:
-		return queryInterface.bulkDelete('Person', null, {});
-	*/
+		return queryInterface.bulkDelete('RoleAbility', null, {});
 	}
 };

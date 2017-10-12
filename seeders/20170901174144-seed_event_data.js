@@ -1,16 +1,13 @@
 const _ = require('lodash');
 const now = require('../lib/now');
 const moment = require('moment');
-//const venueData = require('../data/venueData.json');
-const eventData = require('../data/eventData.json');
+const eventData = require('../data/eventData10-HOCO.json');
 
 const tableName = 'event'
 
 module.exports = {
 	async up(queryInterface, Sequelize) {
 		_.map(eventData, (event) => {
-			console.log(event.name);
-
 			event.startTime = moment(event.startTime).format('YYYY-MM-DD HH:mm:ss');
 			if (event.recurringStartDate) {
 				event.recurringStartDate = moment(event.recurringStartDate).format('YYYY-MM-DD HH:mm:ss')
