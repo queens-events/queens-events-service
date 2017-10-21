@@ -4,9 +4,12 @@
 
 ## Installation
 
-``yarn``
-``yarn add <Backend Store>``
-``cp .env.sample.env``
+``` 
+yarn
+yarn add <Backend Store>
+cp .env.sample
+cp migrationConfig.sample.json
+```
 Edit the .env file to suit your needs
 
 ## Running
@@ -21,6 +24,9 @@ Edit the .env file to suit your needs
 - *DB_SCHEMA_NAME* database schema name
 - *DEBUG_LEVEL* debug level for logging
 - *WEB_PORT* Port to listen on
+- *PAGE_ACCESS_TOKEN* Facebook Page token
+- *VERIFICATION_TOKEN* Graph API Token
+- *WIT_TOKEN* Wit API token
 
 ## Database
 
@@ -34,8 +40,8 @@ Docs here for [modifying/creating migrations](http://docs.sequelizejs.com/manual
 
 ## Backend Store
 Sequelize is being used as an abstract layer between the database and the service. The following can be used to connect to these dbs.
-- Postgres (pg pg-hstore)
 - Mysql (mysql2)
+- Postgres (pg pg-hstore)
 - MSSQL (tedious)
 - Sqlite3 (sqlite3) * Limited functionality
 
