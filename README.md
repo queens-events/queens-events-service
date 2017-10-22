@@ -7,8 +7,8 @@
 ``` 
 yarn
 yarn add <Backend Store>
-cp .env.sample
-cp migrationConfig.sample.json
+cp .env.sample .env
+cp migrationConfig.sample.json migrationConfig.json
 ```
 Edit the .env file to suit your needs
 
