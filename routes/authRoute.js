@@ -58,7 +58,7 @@ module.exports = (app) => {
                 password: req.body.password
             });
 
-            const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, {
+            const token = jwt.sign(newUser.toJSON(), process.env.JWT_SECRET, {
                 expiresIn:  process.env.JWT_EXPIRE
             });
 
