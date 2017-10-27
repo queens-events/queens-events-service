@@ -8,6 +8,10 @@
     "test": "node node_modules/mocha/bin/mocha",
     "migrate": "sequelize --config migrationConfig.json db:migrate",
     "reset-migrate": "sequelize --config migrationConfig.json db:migrate:undo:all",
+    "down-up": "npm run reset-migrate; npm run migrate",
+    "seed-essentials": "npm run seed-roles-abilities; npm run seed-users",
+    "seed-users": "sequelize --config migrationConfig.json db:seed --seed 20170901174112-seed_user_data.js",
+    "seed-roles-abilities": "sequelize --config migrationConfig.json db:seed --seed 20170901174105-seed_role_abilities_data.js",
     "seed-venues": "sequelize --config migrationConfig.json db:seed --seed 20170901174119-seed_venue_data.js",
     "seed-events": "sequelize --config migrationConfig.json db:seed --seed 20170901174144-seed_event_data.js"
   },
