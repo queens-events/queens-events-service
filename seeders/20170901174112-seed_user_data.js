@@ -9,6 +9,7 @@ module.exports = {
 				email: "superuser@test.com",
 				firstName: "Super",
 				lastName: "User",
+				password: "p@ssword!",
 				phone: "555-555-5555",
 				streetAddress: "123 Superuser St.",
 				cityTown: "Kingston",
