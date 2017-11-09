@@ -1,26 +1,38 @@
-'use strict';
+const now = require('../lib/now');
+
+const tableName = 'user';
 
 module.exports = {
-  up: function (queryInterface, Sequelize) {
-    /*
-      Add altering commands here.
-      Return a promise to correctly handle asynchronicity.
+	async up(queryInterface, Sequelize) { 
+		const userId = await queryInterface.bulkInsert(tableName, 
+			[{
+				email: "superuser@test.com",
+				firstName: "Super",
+				lastName: "User",
+				password: "p@ssword!",
+				phone: "555-555-5555",
+				streetAddress: "123 Superuser St.",
+				cityTown: "Kingston",
+				stateProvince: "ON",
+				postalCode: "K0A 1S4",
+				country: "ca",
+				language: "en",
+				isActive: true,
+				createdAt: now(),
+				updatedAt: now(),
+			}], {});
 
-      Example:
-      return queryInterface.bulkInsert('Person', [{
-        name: 'John Doe',
-        isBetaMember: false
-      }], {});
-    */
-  },
+		return queryInterface.bulkInsert('userRole', 
+			[{
+				userId,
+				roleId: 1,
+				createdAt: now(),
+				updatedAt: now(),
+			}], {});
+	},
 
-  down: function (queryInterface, Sequelize) {
-    /*
-      Add reverting commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.bulkDelete('Person', null, {});
-    */
-  }
+	async down(queryInterface, Sequelize) {
+		await queryInterface.bulkDelete('userRole', null, {});
+		return queryInterface.bulkDelete(tableName, null, {});
+	}
 };

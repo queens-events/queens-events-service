@@ -1,22 +1,25 @@
 const _ = require('lodash');
+const now = require('../lib/now');
+
+const tableName = 'roleAbility';
 
 module.exports = {
 	async up(queryInterface, Sequelize) {
-		await queryInterface.bulkInsert('Role', 
+		await queryInterface.bulkInsert('role', 
 			[{
 				id: 1,
 				name: 'superuser',
-				createdAt: now,
-				updatedAt: now,
+				createdAt: now(),
+				updatedAt: now(),
 			},
 			{
 				id: 2,
 				name: 'user',
-				createdAt: now,
-				updatedAt: now,
+				createdAt: now(),
+				updatedAt: now(),
 			}], {});
 		
-		await queryInterface.bulkInsert('Abilities',
+		await queryInterface.bulkInsert('ability',
 			[{
 	            id: 1,
 	            name: 'createUsers',
@@ -97,21 +100,23 @@ module.exports = {
 
 		const user = {
 			role: 2,
-			abilties: [17]
+			abilities: [17]
 		};
 
 		const roleAbilities = [];
 
-		_.forEach([superUser, user], (user) => {
-			_.forEach(user.abilities, (ability) => {
-				roleAbilities.push({roleId: user.role, abilityId: ability});
+		_.forEach([superUser, user], (person) => {
+			_.forEach(person.abilities, (ability) => {
+				roleAbilities.push({roleId: person.role, abilityId: ability});
 			});
 		});
 			
-		return queryInterface.bulkInsert('RoleAbility', roleAbilities, {});
+		return queryInterface.bulkInsert(tableName, roleAbilities, {});
 	},
 
 	async down(queryInterface, Sequelize) {
-		return queryInterface.bulkDelete('RoleAbility', null, {});
+		await queryInterface.bulkDelete(tableName, null, {});
+		await queryInterface.bulkDelete('ability', null, {})
+		return queryInterface.bulkDelete('role', null, {});
 	}
 };

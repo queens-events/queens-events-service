@@ -3,6 +3,9 @@ const Router = require('express-promise-router');
 
 const namespace = '/api/v1/users';
 
+// Middleware
+const authMiddleware = require('../middleware/authMiddleware');
+
 // Response Errors
 const ServerError = require('../responses/errors/serverError');
 const EntityExistsError = require('../responses/errors/entityExistsError');
@@ -57,9 +60,9 @@ module.exports = (app) => {
 
     const postUser = async (req, res) => {
         try {
-            const user = await User.fineOne({ where: { email: req.body.email }});
+            const user = await User.findOne({ where: { email: req.body.email }});
 
-            if (uer) {
+            if (user) {
                 return res.json(new EntityExistsError());
             }
 
@@ -161,7 +164,7 @@ module.exports = (app) => {
     return {
         namespace,
         router: Router()
-            .get('/', getUsers)
+            .get('/', authMiddleware, getUsers)
             .post('/', postUser)
             .get('/:userID', getUserByID)
             .put('/:userID', updateUserByID)
