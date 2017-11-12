@@ -165,9 +165,9 @@ module.exports = (app) => {
         namespace,
         router: Router()
             .get('/', authMiddleware, getUsers)
-            .post('/', postUser)
-            .get('/:userID', getUserByID)
-            .put('/:userID', updateUserByID)
-            .delete('/:userID', deleteUserByID),
+            .post('/', authMiddleware, postUser)
+            .get('/:userID', authMiddleware, getUserByID)
+            .put('/:userID', authMiddleware, updateUserByID)
+            .delete('/:userID', authMiddleware, deleteUserByID),
     }
 };
