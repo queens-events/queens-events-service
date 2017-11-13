@@ -3,6 +3,9 @@ const Router = require('express-promise-router');
 
 const namespace = '/api/v1/events';
 
+// Middleware
+const authMiddleware = require('../middleware/authMiddleware');
+
 // Response Errors
 const ServerError = require('../responses/errors/serverError');
 const EntityExistsError = require('../responses/errors/entityExistsError');
@@ -142,9 +145,9 @@ module.exports = (app) => {
         namespace,
         router: Router()
             .get('/', getEvents)
-            .post('/', postEvent)
-            .get('/:eventID', getEventByID)
-            .put('/:eventID', updateEventByID)
-            .delete('/:eventID', deleteEventByID),
+            .post('/', authMiddleware, postEvent)
+            .get('/:eventID', authMiddleware, getEventByID)
+            .put('/:eventID', authMiddleware, updateEventByID)
+            .delete('/:eventID', authMiddleware, deleteEventByID),
     }
 };

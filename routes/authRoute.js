@@ -80,6 +80,6 @@ module.exports = (app) => {
         namespace,
         router: Router()
             .post('/', authenticate)
-            .post('/signUp', signUp),
+            .post('/signup', signUp),
     }
 }
