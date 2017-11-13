@@ -13,7 +13,8 @@ const initWebserver = app => {
     // Create Express instance
     const webServer = Express();
 
-    if (app.config.debug.active === true) webServer.use(cors());
+    //if (app.config.debug.active === true) webServer.use(cors());
+    webServer.use(cors());
     
     webServer.use(bodyParser.json());
     webServer.use(bodyParser.urlencoded({ extended: false }));
