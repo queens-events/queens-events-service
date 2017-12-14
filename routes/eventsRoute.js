@@ -60,9 +60,6 @@ module.exports = (app) => {
 
     const postEvent = async (req, res) => {
         try {
-            const fileData = req.file;
-            console.log(fileData);
-
             const event = await Event.findOne({ where: { name: req.params.name }});
 
             if (event) {
