@@ -15,9 +15,9 @@ const initWebserver = app => {
 
     //if (app.config.debug.active === true) webServer.use(cors());
     webServer.use(cors());
-    
-    webServer.use(bodyParser.json());
-    webServer.use(bodyParser.urlencoded({ extended: false }));
+
+    webServer.use(bodyParser.json())
+             .use(bodyParser.urlencoded({ extended: true }));
 
     // Bind Express instance to HTTP Server
     const httpServer = http.createServer(webServer);
