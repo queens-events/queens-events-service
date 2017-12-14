@@ -11,14 +11,14 @@ const multerMiddleware = require('../middleware/multerMiddlewareFactory');
 const ServerError = require('../responses/errors/serverError');
 
 module.exports = (app) => {
-    const uploadEventImage = async (req, res) => {
+    const uploadImage = async (req, res) => {
         try {
             res.json({
                 success: true,
                 payload: req.file,
             })
         } catch (err) {
-            app.logger.error('Something went wrong inside the postEvent', {
+            app.logger.error('Something went wrong inside the uploadImage', {
                 message: err.message || '',
                 stack: err.stack || '',
             });
@@ -34,7 +34,13 @@ module.exports = (app) => {
                 '/events/image-upload',
                 authMiddleware,
                 multerMiddleware('event-photos').single('eventImageFile'),
-                uploadEventImage
+                uploadImage
             )
+            .post(
+                '/organizations/image-upload',
+                authMiddleware,
+                multerMiddleware('org-photos').single('orgImageFile'),
+                uploadImage
+            ),
     }
 };
