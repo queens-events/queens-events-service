@@ -86,7 +86,7 @@ module.exports = (app) => {
                 if (payload === 'SOON') {
                     const events = await Event.findAll({
                         where: { startTime: { $gt: moment(timeOfMessage) }},
-                        order: [ ['startTime', 'DESC'] ],
+                        order: [ ['startTime', 'ASC'] ],
                         limit: 5
                     });
 
