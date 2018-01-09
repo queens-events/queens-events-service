@@ -137,7 +137,7 @@ const sendService = {
 			{
 				title: event.name,
 				subtitle: dateString,
-				item_url: event.qeUrl || event.fbEventUrl || event.itemUrl,
+				item_url: event.qeUrl || event.fbEventUrl || event.itemUrl || 'https://facebook.com',
 				image_url: event.imageUrl,
 				buttons
 			});
