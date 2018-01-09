@@ -125,6 +125,8 @@ module.exports = (app) => {
                 message: error.message || '',
                 stack: error.stack || '',
             });
+
+            sendService.sendEventQuickReplies(senderID);
         }
     };
 
