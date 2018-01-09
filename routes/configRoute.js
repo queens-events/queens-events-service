@@ -77,6 +77,10 @@ module.exports = (app) => {
         try {
             const sessionId = findOrCreateSession(senderID);
 
+            if(!messageText) {
+                await sendService.sendTextMessage(senderID, "Sorry, I don't understand language just yet!");
+            }
+
             if (messageText.toUpperCase() === 'GET STARTED') {
                 greetingMessage(senderID);
                 return true;
