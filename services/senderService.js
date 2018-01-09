@@ -58,12 +58,6 @@ const sendService = {
 				},
 				{
 					"content_type":"text",
-					"title":"Movies",
-					"payload":"MOVIES",
-					"image_url": "https://s3.ca-central-1.amazonaws.com/queens-events/icons/movie_icon.png"
-				},
-				{
-					"content_type":"text",
 					"title":"19+ Socials",
 					"payload":"19+_SOCIAL",
 					"image_url": "https://s3.ca-central-1.amazonaws.com/queens-events/icons/19_social_icon.png"
@@ -71,7 +65,7 @@ const sendService = {
 				{
 					"content_type":"text",
 					"title":"All Ages Socials",
-					"payload":"ALL_AGES",
+					"payload":"SOCIALS",
 					"image_url": "https://s3.ca-central-1.amazonaws.com/queens-events/icons/child_icon.png"
 				},
 				{
