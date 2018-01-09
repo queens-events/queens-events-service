@@ -84,7 +84,8 @@ module.exports = (app) => {
             if (messageText.toUpperCase() === 'GET STARTED') {
                 greetingMessage(senderID);
                 return true;
-            } 
+            }
+            else if (!message.quick_reply.payload) { await sendService.sendTextMessage(senderID, "Sorry, I don't understand language just yet!"); }
             else if (message.quick_reply.payload) {
                 const payload = message.quick_reply.payload;
                 if (payload === 'SOON') {
