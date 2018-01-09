@@ -8,16 +8,17 @@ const tableName = 'event'
 module.exports = {
 	async up(queryInterface, Sequelize) {
 		_.map(eventData, (event) => {
-			event.startTime = moment(event.startTime).format('YYYY-MM-DD HH:mm:ss');
+			console.log(event)
+			event.startTime = moment(event.startTime).add(3, 'months').format('YYYY-MM-DD HH:mm:ss');
 			if (event.recurringStartDate) {
-				event.recurringStartDate = moment(event.recurringStartDate).format('YYYY-MM-DD HH:mm:ss')
+				event.recurringStartDate = moment(event.recurringStartDate).add(3, 'months').format('YYYY-MM-DD HH:mm:ss')
 			}
 			if (event.recurringEndDate) {
-				event.recurringEndDate = moment(event.recurringEndDate).format('YYYY-MM-DD HH:mm:ss')
+				event.recurringEndDate = moment(event.recurringEndDate).add(3, 'months').format('YYYY-MM-DD HH:mm:ss')
 			}
 			
 			if (event.endTime) {
-				event.endTime = moment(event.endTime).format('YYYY-MM-DD HH:mm:ss')
+				event.endTime = moment(event.endTime).add(3, 'months').format('YYYY-MM-DD HH:mm:ss')
 			} else {
 				event.endTime = event.startTime;
 			}

@@ -66,9 +66,15 @@ module.exports = (app) => {
                 res.json(new EntityExistsError());
             }
 
+            // console.log(req.data.body)
+
             const newEvent = await Event.create({
                 name: req.body.name,
+                imageUrl: req.body.imageUrl,
+                description: req.body.description,
                 address: req.body.address,
+                category: req.body.category,
+                tag: req.body.tag,
                 city: req.body.city,
                 province: req.body.province,
                 country: req.body.country,
@@ -76,7 +82,11 @@ module.exports = (app) => {
                 lat: req.body.lat,
                 long: req.body.long,
                 accessability: req.body.accessability,
+                startTime: req.body.startTime,
+                endTime: req.body.endTime
             });
+
+            console.log(newEvent)
             
             res.json({
                 success: true,
