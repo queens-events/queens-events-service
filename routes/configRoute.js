@@ -77,10 +77,12 @@ module.exports = (app) => {
         try {
             const sessionId = findOrCreateSession(senderID);
 
-            if (messageText.toUpperCase() === 'GET STARTED') {
-                greetingMessage(senderID);
-                return true;
-            } 
+            if (messageText){
+                if (messageText.toUpperCase() === 'GET STARTED') {
+                    greetingMessage(senderID);
+                    return true;
+                } 
+            }
             else if (message.quick_reply.payload) {
                 const payload = message.quick_reply.payload;
                 if (payload === 'SOON') {
@@ -91,8 +93,8 @@ module.exports = (app) => {
 
                     await sendService.sendEventGenericMessage(sessions[sessionId].fbid, events);
 
-                } else if (payload === 'CONCERTS' || payload === 'MOVIES' || payload === 'ARTS_AND_THEATER' ||
-                    payload === 'EDUCATIONAL' || payload === 'HEALTH' || payload === 'SPORTS') {
+                } else if (payload === 'CONCERTS' || payload === 'ARTS_AND_THEATER' ||
+                    payload === 'EDUCATIONAL' || payload === 'HEALTH' || payload === 'SPORTS' || payload === 'SOCIALS') {
 
                     const events = await Event.findAll({
                         where: { category: payload, startTime: { $gt: moment(timeOfMessage) }},
